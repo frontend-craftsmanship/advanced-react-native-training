@@ -1,0 +1,13 @@
+{
+  "precommit": "yarn test",
+  "start": "node node_modules/react-native/local-cli/cli.js start",
+  "ios": "react-native-scripts ios",
+  "android": "react-native run-android",
+  "flow-coverage": "flow-coverage-report --config ./.flowcoverage",
+  "flow": "flow",
+  "jest": "jest --coverage",
+  "typecheck": "yarn flow && yarn flow-coverage",
+  "test":
+    "npm run lint && yarn typecheck && node node_modules/jest/bin/jest.js",
+  "lint": "eslint . —max-warnings 0"
+}

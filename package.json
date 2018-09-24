@@ -1,0 +1,49 @@
+{
+  "name": "mobileapps",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "precommit": "yarn test",
+    "ios": "react-native-scripts ios",
+    "android": "react-native run-android",
+    "flow-coverage": "flow-coverage-report --config ./.flowcoverage",
+    "flow": "flow",
+    "jest": "jest --coverage",
+    "typecheck": "yarn flow && yarn flow-coverage",
+    "test": "npm run lint && yarn typecheck && node node_modules/jest/bin/jest.js",
+    "lint": "eslint . —max-warnings 0"
+  },
+  "dependencies": {
+    "class-autobind": "^0.1.4",
+    "react": "16.5.0",
+    "react-native": "0.57.1",
+    "react-navigation": "^2.8.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "babel-jest": "23.6.0",
+    "babel-plugin-transform-react-jsx-source": "^6.22.0",
+    "eslint": "4.19.1",
+    "eslint-plugin-babel": "^5.1.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "eslint-plugin-react": "^7.10.0",
+    "flow-bin": "^0.76.0",
+    "flow-coverage-report": "^0.5.0",
+    "husky": "^1.0.0-rc.15",
+    "jest": "23.6.0",
+    "metro-react-native-babel-preset": "^0.45.6",
+    "react-test-renderer": "16.5.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "transform": {
+      "^.+\\.(js)$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
+  }
+}

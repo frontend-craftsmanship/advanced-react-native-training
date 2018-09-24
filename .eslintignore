@@ -1,0 +1,6 @@
+!.*
+/flow-typed/npm
+node_modules/*
+coverage/
+flow-coverage/
+scripts/

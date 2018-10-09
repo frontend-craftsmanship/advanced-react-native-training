@@ -9,7 +9,7 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Hello World</Text>
+        <Text>Hello BTPN</Text>
       </View>
     );
   }

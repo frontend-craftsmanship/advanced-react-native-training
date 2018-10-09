@@ -57,3 +57,6 @@ buck-out/
 
 #flow coverage
 flow-coverage
+
+#jest coverage
+coverage

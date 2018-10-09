@@ -151,7 +151,7 @@ MIT
 [donate-badge]: https://img.shields.io/badge/$-support-green.svg?style=flat-square
 [github-watch-badge]: https://img.shields.io/github/watchers/frontend-craftsmanship/advanced-react-native-training.svg?style=social
 [github-watch]: https://github.com/frontend-craftsmanship/advanced-react-native-training/watchers
-[github-star-badge]: https://img.shields.io/github/stars/frontend-craftsmanship/advanced-react-native-training/master.svg?style=social
+[github-star-badge]: https://img.shields.io/github/stars/frontend-craftsmanship/advanced-react-native-training.svg?style=social
 [github-star]: https://github.com/frontend-craftsmanship/advanced-react-native-training/stargazers
 [twitter-badge]: https://img.shields.io/twitter/url/https/github.com/kentcdodds/asts-workshop.svg?style=social
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key

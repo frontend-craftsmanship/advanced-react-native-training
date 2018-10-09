@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1537796473771" clover="3.2.0">
-  <project timestamp="1537796473771" name="All files">
-    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0">
+<coverage generated="1539083187792" clover="3.2.0">
+  <project timestamp="1539083187792" name="All files">
+    <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5" elements="13" coveredelements="13" complexity="0" loc="8" ncloc="8" packages="1" files="2" classes="2">
+      <file name="compose.js" path="/Users/broerjuang/Documents/trainings/btpn/mobileapps/src/generals/utils/compose.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="9" type="stmt"/>
+        <line num="4" count="8" type="stmt"/>
+        <line num="5" count="9" type="stmt"/>
+        <line num="6" count="8" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+      </file>
+      <file name="index.js" path="/Users/broerjuang/Documents/trainings/btpn/mobileapps/src/generals/utils/index.js">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="8" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+      </file>
     </metrics>
   </project>
 </coverage>

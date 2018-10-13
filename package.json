@@ -46,5 +46,10 @@
     "hooks": {
       "pre-commit": "npm test"
     }
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }

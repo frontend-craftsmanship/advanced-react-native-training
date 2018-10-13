@@ -3,6 +3,8 @@
 import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
+import {Button} from './core-ui';
+
 type Props = {};
 type State = {};
 class App extends React.Component<Props, State> {
@@ -10,6 +12,13 @@ class App extends React.Component<Props, State> {
     return (
       <View style={styles.container}>
         <Text>Hello BTPN</Text>
+        <Button text="Button" onPress={() => {}} />
+        <Button
+          iconLeft="apple"
+          text="Button With Icons"
+          iconRight="archive"
+          onPress={() => {}}
+        />
       </View>
     );
   }

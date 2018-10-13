@@ -1,6 +1,7 @@
 // @flow
 
 import Button from './Button';
+import Card from './Card';
 import Icon from './Icon';
-
-export {Button, Icon};
+import Separator from './Separator';
+export {Button, Card, Icon, Separator};

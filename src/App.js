@@ -3,14 +3,31 @@
 import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-import {Button, Card, Icon, Separator} from './core-ui';
-import {GREY} from './constants/colors';
+import {Button, Card, Icon, Separator, TextField} from './core-ui';
+import {ICON_COLOR, MAIN_TEXT, WHITE} from './constants/colors';
 type Props = {};
-type State = {};
+type State = {
+  text: string;
+};
+const PADDING_APP = 5;
 class App extends React.Component<Props, State> {
+  state = {
+    text: '',
+  };
   render() {
     return (
       <View style={styles.container}>
+        <TextField
+          leftIcon="search"
+          placeholder="Search category"
+          onChangeText={(text) => this.setState({text})}
+        />
+        <TextField
+          disabled
+          rightIcon="ban"
+          placeholder="Input disabled"
+          onChangeText={(text) => this.setState({text})}
+        />
         <Card>
           <TempItemList iconName="building" itemName="House" separator />
           <TempItemList iconName="graduation-cap" itemName="School" separator />
@@ -39,12 +56,12 @@ function TempItemList(props: {
       <View style={styles.itemList}>
         <Icon
           name={iconName}
-          color={GREY}
+          color={ICON_COLOR}
           size={20}
           containerStyle={{width: 40}}
         />
         <Text style={styles.text}>{itemName}</Text>
-        <Icon name="angle-right" color={GREY} size={15} />
+        <Icon name="angle-right" color={ICON_COLOR} size={15} />
       </View>
       {separator && <Separator style={{marginTop: 5}} />}
     </View>
@@ -54,12 +71,15 @@ function TempItemList(props: {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: WHITE,
+    justifyContent: 'center',
+    paddingHorizontal: PADDING_APP,
   },
   text: {
     flex: 1,
     fontSize: 14,
+    color: MAIN_TEXT,
     fontFamily: 'Roboto-Regular',
   },
   itemList: {

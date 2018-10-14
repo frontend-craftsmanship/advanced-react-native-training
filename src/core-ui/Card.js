@@ -24,7 +24,7 @@ function Card(props: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 7,
+    marginVertical: 7,
     padding: 10,
     borderRadius: 4,
     alignSelf: 'stretch',

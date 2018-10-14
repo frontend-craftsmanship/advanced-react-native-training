@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: BLUE_SEA,
-    margin: 5,
+    marginVertical: 5,
     paddingVertical: 12,
     paddingHorizontal: 10,
   },

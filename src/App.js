@@ -1,9 +1,9 @@
 // @flow
 
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
-import {Button, Card, Icon, Separator, TextField} from './core-ui';
+import {Button, Card, Icon, Separator, Text, TextField} from './core-ui';
 import {ICON_COLOR, MAIN_TEXT, WHITE} from './constants/colors';
 type Props = {};
 type State = {
@@ -17,6 +17,19 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       <View style={styles.container}>
+        <Text size="xsmall" color="#def" weight="bold" primary>
+          this field can not be empty
+        </Text>
+        <Text size="small" weight="reg" color="black">
+          Expense Name
+        </Text>
+        <Text size="medium">Income Name</Text>
+        <Text size="large" color="navy" weight="reg">
+          Top 10 Cities
+        </Text>
+        <Text size="xlarge" color="salmon" weight="light">
+          1,108
+        </Text>
         <TextField
           leftIcon="search"
           placeholder="Search category"

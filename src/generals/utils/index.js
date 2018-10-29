@@ -1,2 +1,6 @@
 // @flow
-export {default as compose} from './compose';
+
+import categoryToIconName from './categoryToIconName';
+import compose from './compose';
+
+export {categoryToIconName, compose};

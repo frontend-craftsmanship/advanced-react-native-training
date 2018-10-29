@@ -6,7 +6,7 @@ import {View, Platform, StyleSheet} from 'react-native';
 import {WHITE} from '../constants/colors';
 
 type Props = {
-  style?: Object;
+  style?: Object | Array<?Object>;
   color?: string;
   children: string | React.Node;
 };

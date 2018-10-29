@@ -17,7 +17,7 @@ type Props = {
   text: string;
   iconLeft?: string;
   iconRight?: string;
-  style?: Object; //TODO: Need to set a global type for StyleSheet on flow-typed
+  style?: Array<Object>; //TODO: Need to set a global type for StyleSheet on flow-typed
   onPress: () => void;
 };
 
@@ -28,7 +28,7 @@ function Button(props: Props) {
     return (
       <TouchableHighlight
         onPress={onPress}
-        style={buttonStyles}
+        style={[buttonStyles]}
         underlayColor={LIGHT_PURPLE}
       >
         <Text style={styles.text}>{text}</Text>
@@ -40,7 +40,7 @@ function Button(props: Props) {
       onPress={onPress}
       background={TouchableNativeFeedback.Ripple(LIGHT_PURPLE)}
     >
-      <View style={buttonStyles}>
+      <View style={[buttonStyles]}>
         {iconLeft && <Icon name={iconLeft} color={WHITE} size="medium" />}
         <View style={styles.contentWrapper}>
           <Text style={styles.text}>{text}</Text>

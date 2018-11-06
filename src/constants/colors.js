@@ -13,6 +13,7 @@ const MAIN_TEXT = '#61656A';
 const WHITE = '#FFFFFF';
 const BLACK = '#000000';
 const GREEN = 'rgb(20, 160, 50)';
+const DARK_GREY = 'rgb(73, 80, 87)';
 
 export {
   BORDER,
@@ -21,6 +22,7 @@ export {
   BLUE_SEA,
   RED,
   GREY,
+  DARK_GREY,
   ICON_COLOR,
   LIGHT_BORDER,
   LIGHT_GREY,

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {View, Platform, StyleSheet} from 'react-native';
 
-import {WHITE} from '../constants/colors';
+import {WHITE, LIGHT_GREY} from '../constants/colors';
 
 type Props = {
   style?: Object | Array<?Object>;
@@ -24,9 +24,11 @@ function Card(props: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 7,
+    marginVertical: 8,
     padding: 10,
     borderRadius: 4,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: LIGHT_GREY,
     alignSelf: 'stretch',
     backgroundColor: WHITE,
   },

@@ -2,8 +2,8 @@
 
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {BLUE_SEA} from '../constants/colors';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import {DARK_GREY} from '../constants/colors';
 
 const SMALL = 14;
 const MEDIUM = 24;
@@ -20,7 +20,7 @@ type Props = {
 
 export default function CustomIcon(props: Props) {
   let {name, color, containerStyle, style, size, onPress, ...otherProp} = props;
-  let iconColor = color || BLUE_SEA;
+  let iconColor = color || DARK_GREY;
   let iconSize;
   if (size && typeof size === 'number') {
     iconSize = size;

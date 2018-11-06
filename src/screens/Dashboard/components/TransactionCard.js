@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 
-import {Card, Icon} from '../../../core-ui';
+import {Card, Icon, Text} from '../../../core-ui';
 import {categoryToIconName} from '../../../generals/utils';
 import {BLUE_SEA, RED} from '../../../constants/colors';
 
@@ -21,33 +21,25 @@ export default function TransactionCard(props: TransactionCardProps) {
   let {type, transactionDetail, amount, category, date} = props;
   let isIncome = type === 'INCOME';
   return (
-    <Card>
-      <View style={styles.root}>
-        <View style={styles.iconWrapper}>
-          <Icon size="medium" name={categoryToIconName(category)} />
+    <Card style={{marginHorizontal: 15}}>
+      <TouchableOpacity onPress={() => {}}>
+        <View style={styles.root}>
+          <View style={styles.iconWrapper}>
+            <Icon size={20} name={categoryToIconName(category)} />
+          </View>
+          <View style={styles.transactionDetailWrapper}>
+            <Text weight="bold">{transactionDetail}</Text>
+            <Text style={{marginTop: 5, fontSize: 10}}>
+              {new Date(date).toDateString()}
+            </Text>
+          </View>
+          <View style={styles.amountWrapper}>
+            <Text size="small" style={{color: isIncome ? BLUE_SEA : RED}}>
+              {`${isIncome ? '+' : '-'}${amount}`}
+            </Text>
+          </View>
         </View>
-        <View style={styles.transactionDetailWrapper}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '500',
-            }}
-          >
-            {transactionDetail}
-          </Text>
-          <Text>{date}</Text>
-        </View>
-        <View style={styles.amountWrapper}>
-          <Text
-            style={{
-              fontSize: 14,
-              color: isIncome ? BLUE_SEA : RED,
-            }}
-          >
-            {`${isIncome ? '+' : '-'}${amount}`}
-          </Text>
-        </View>
-      </View>
+      </TouchableOpacity>
     </Card>
   );
 }
@@ -55,7 +47,7 @@ export default function TransactionCard(props: TransactionCardProps) {
 let styles = StyleSheet.create({
   root: {
     flexDirection: 'row',
-    minHeight: 50,
+    minHeight: 40,
     alignItems: 'center',
   },
   iconWrapper: {

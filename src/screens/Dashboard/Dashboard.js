@@ -1,11 +1,14 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, FlatList} from 'react-native';
 
+import {Text, Icon} from '../../core-ui';
 import TransactionCard from './components/TransactionCard';
 import BalanceCard from './components/BalanceCard';
-import {BLUE_SEA, RED} from '../../constants/colors';
+import {BLUE_SEA, RED, WHITE, BLACK} from '../../constants/colors';
+
+import type {NavigationScreenProp, NavigationRoute} from 'react-navigation';
 
 const TRANSACTIONS_DATA = [
   {
@@ -43,21 +46,44 @@ const TRANSACTIONS_DATA = [
 ];
 
 class Dashboard extends Component<*, *> {
+  static navigationOptions = ({
+    navigation,
+  }: {
+    navigation: NavigationScreenProp<NavigationRoute>;
+  }) => {
+    return {
+      headerTitle: 'Dashboard',
+      headerLeft: (
+        <View style={{paddingHorizontal: 20}}>
+          <Icon
+            name="bars"
+            size={18}
+            color={BLACK}
+            onPress={() => {
+              navigation.toggleDrawer && navigation.toggleDrawer();
+            }}
+          />
+        </View>
+      ),
+    };
+  };
+
   render() {
     return (
-      <View style={{padding: 10, flex: 1}}>
-        <View style={{flexDirection: 'row'}}>
+      <View style={{backgroundColor: WHITE, flex: 1}}>
+        <View style={{padding: 15, flexDirection: 'row'}}>
           <BalanceCard title="Income" amount="$13,500.00" color={BLUE_SEA} />
           <BalanceCard title="Expense" amount="$49,000.00" color={RED} />
         </View>
-        <View style={{marginTop: 15, flex: 1}}>
-          <Text style={{marginBottom: 5, fontSize: 16}}>History</Text>
+        <View style={{marginTop: 5, flex: 1}}>
+          <Text size="medium" style={{marginBottom: 5, paddingHorizontal: 15}}>
+            History
+          </Text>
           <FlatList
             data={TRANSACTIONS_DATA}
             renderItem={({item}) => <TransactionCard {...item} />}
             keyExtractor={({id}) => id}
             style={{flex: 1}}
-            showsVerticalScrollIndicator={false}
           />
         </View>
       </View>

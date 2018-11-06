@@ -3,14 +3,13 @@
 import React, {Component} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   Image,
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
 
-import {Button} from '../../core-ui';
+import {Button, Text} from '../../core-ui';
 import {WHITE, BLUE_SEA, LIGHT_GREY} from '../../constants/colors';
 import Logo from '../../images/logo.png';
 
@@ -58,7 +57,12 @@ export default class Login extends Component<*, State> {
               ]}
             />
           </View>
-          <Button text="SIGN IN" onPress={() => {}} />
+          <Button
+            text="SIGN IN"
+            onPress={() => {
+              this.props.navigation.navigate('dashboard');
+            }}
+          />
         </KeyboardAvoidingView>
       </View>
     );

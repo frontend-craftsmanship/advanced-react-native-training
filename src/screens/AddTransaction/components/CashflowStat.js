@@ -1,14 +1,9 @@
 // @flow
 
 import React, {Component} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  TextInput,
-  StyleSheet,
-} from 'react-native';
+import {View, TouchableOpacity, TextInput, StyleSheet} from 'react-native';
 
+import {Text} from '../../../core-ui';
 import {BLUE_SEA, WHITE, LIGHT_GREY} from '../../../constants/colors';
 
 type Props = {
@@ -41,16 +36,15 @@ export default class CashflowStat extends Component<Props, {}> {
 
   _renderButton(transactionType: 'INCOME' | 'EXPENSE') {
     let {selectedTransactionType, onSelectTransactionType} = this.props;
+    let isCurrentlySelected = selectedTransactionType === transactionType;
     return (
       <TouchableOpacity
         style={styles[`${transactionType.toLowerCase()}Button`]}
       >
         <Text
-          style={{
-            fontSize: 16,
-            color:
-              selectedTransactionType === transactionType ? WHITE : LIGHT_GREY,
-          }}
+          size="medium"
+          weight={isCurrentlySelected ? 'bold' : 'reg'}
+          style={{color: isCurrentlySelected ? WHITE : LIGHT_GREY}}
           onPress={() => onSelectTransactionType(transactionType)}
         >
           {transactionType}
@@ -65,6 +59,7 @@ let styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: BLUE_SEA,
     padding: 20,
+    paddingBottom: 1,
   },
   incomeButton: {
     flex: 1,
@@ -78,10 +73,10 @@ let styles = StyleSheet.create({
   },
   textInputWrapper: {
     alignItems: 'center',
-    paddingTop: 15,
+    paddingTop: 10,
   },
   textInput: {
     color: WHITE,
-    fontSize: 36,
+    fontSize: 30,
   },
 });

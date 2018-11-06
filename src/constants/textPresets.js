@@ -12,7 +12,7 @@ const FONT_WEIGHT = {
   LIGHT: '300',
   REG: 'normal',
   BOLD: 'bold',
-  BLACK: 900,
+  BLACK: '900',
 };
 
 export {FONT_SIZE, FONT_WEIGHT};

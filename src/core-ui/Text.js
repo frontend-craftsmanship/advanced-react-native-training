@@ -8,7 +8,7 @@ import {BLUE_SEA, MAIN_TEXT} from '../constants/colors';
 
 type Props = {
   size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
-  weight?: string;
+  weight?: 'light' | 'reg' | 'bold' | 'black';
   italic?: boolean;
   primary?: boolean;
   color?: string;

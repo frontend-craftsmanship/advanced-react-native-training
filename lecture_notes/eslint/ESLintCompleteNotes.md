@@ -72,12 +72,12 @@ And we're going to refactor this code a bit. So, everybody will have the same me
 So, we're placing the root of our app inside the src folder
 
 ```js
-import * as React from "react";
+import * as React from 'react';
 
 function Greeting(props) {
-  let { name } = props;
-  if (typeof name === "sting") {
-    return <Text>{"hello${name}"}</Text>;
+  let {name} = props;
+  if (typeof name === 'sting') {
+    return <Text>{'hello${name}'}</Text>;
   } else {
     return <Text>Hello Nobody</Text>;
   }
@@ -86,7 +86,7 @@ function Greeting(props) {
 function App(props) {
   return (
     <View>
-      <Greeting name={"Juang"} />
+      <Greeting name={'Juang'} />
     </View>
   );
 }
@@ -99,15 +99,15 @@ anybody notice the issue? does our tools catch this bugs before we push it into 
 Let's comment this out
 
 ```js
-import * as React from "react";
+import * as React from 'react';
 // first we never really importing View or Text so,
 
 function Greeting(props) {
-  let { name } = props;
+  let {name} = props;
   // this there's a typo because I named it sting instead of string
-  if (typeof name === "sting") {
+  if (typeof name === 'sting') {
     // here's I suppose to use backtick instead of string literls
-    return <Text>{"hello${name}"}</Text>;
+    return <Text>{'hello${name}'}</Text>;
   } else {
     return <Text>Hello Nobody</Text>;
   }
@@ -116,7 +116,7 @@ function Greeting(props) {
 function App(props) {
   return (
     <View>
-      <Greeting name={"Juang"} />
+      <Greeting name={'Juang'} />
     </View>
   );
 }
@@ -175,13 +175,13 @@ And it will give us the following warnings. Even, when you have eslint plugin th
 ## So the fix will look like following
 
 ```js
-import * as React from "react";
-import { View, Text } from "react-native";
+import * as React from 'react';
+import {View, Text} from 'react-native';
 
 function Greeting(props) {
-  let { name } = props;
-  if (typeof name === "string") {
-    return <Text>{"hello${name}"}</Text>;
+  let {name} = props;
+  if (typeof name === 'string') {
+    return <Text>{'hello${name}'}</Text>;
   } else {
     return <Text>Hello Nobody</Text>;
   }
@@ -190,7 +190,7 @@ function Greeting(props) {
 function App(props) {
   return (
     <View>
-      <Greeting name={"Juang"} />
+      <Greeting name={'Juang'} />
     </View>
   );
 }

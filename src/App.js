@@ -1,9 +1,9 @@
-import * as React from "react";
-import { View, Text } from "react-native";
+import * as React from 'react';
+import {View, Text} from 'react-native';
 
 function Greeting(props) {
-  let { name } = props;
-  if (typeof name === "string") {
+  let {name} = props;
+  if (typeof name === 'string') {
     return <Text>{`hello${name}`} </Text>;
   } else {
     return <Text>Hello Nobody</Text>;
@@ -13,7 +13,7 @@ function Greeting(props) {
 function App() {
   return (
     <View>
-      <Greeting name={"Juang"} />
+      <Greeting name={'Juang'} />
     </View>
   );
 }

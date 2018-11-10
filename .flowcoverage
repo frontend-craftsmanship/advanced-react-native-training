@@ -3,7 +3,10 @@
     "node_modules/**"
   ],
   "globIncludePatterns": [
-    "src/*.js"
+    "src/*.js",
+    "src/**/*.js",
+    "src/**/**/*.js",
+    "src/**/**/**/*.js"
   ],
   "outputDir": "flow-coverage",
   "threshold": 80,

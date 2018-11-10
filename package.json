@@ -6,7 +6,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "lint": "eslint src",
-    "format": "prettier --write \"**/*.+(js|jsx|json|md|yml|graphql)\""
+    "prettier": "prettier \"**/*.+(js|jsx|json|md|yml|graphql)\"",
+    "format": "yarn prettier --write",
+    "validate": "yarn lint && yarn prettier --list-different"
   },
   "dependencies": {
     "react": "16.6.0-alpha.8af6728",

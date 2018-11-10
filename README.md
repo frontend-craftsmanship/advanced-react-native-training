@@ -1,49 +1,33 @@
-## Prettier Config
+## Add Validation Script
 
-To be able to take advantage of code formatting. There's more about configuring prettier to our project.
+Sometimes, our co-worker does not have the same config like we do. In this case, we need to make sure that we protect those from happening. For example, when your co-worker disable `format-on-save` in his/her editor.
 
-To play around with the config. Please go to [Prettier-Playground](https://prettier.io/playground/)
+It's very helpful to provide handy scripts to our `package.json` file to execute those.
 
-Similar to `eslint`. We can configure `prettier` inside `prettierrc` file.
-
-Please put this config
+Let's rewrite this
 
 ```json
 {
-  "bracketSpacing": false,
-  "singleQuote": true,
-  "trailingComma": "all",
-  "arrowParens": "always"
-}
-```
-
-Those configs, match exactly with our eslint.
-
-```json
-{
-  "rules": {
-    "array-bracket-spacing": [1, "never"],
-    "comma-dangle": [1, "always-multiline"],
-    "arrow-parens": 1,
-    "quotes": [
-      1,
-      "single",
-      {
-        "avoidEscape": true,
-        "allowTemplateLiterals": true
-      }
-    ]
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "lint": "eslint src",
+    "format": "prettier --write \"**/*.+(js|jsx|json|md|yml|graphql)\""
   }
 }
 ```
 
-So, `eslint` and `pretter` can work well together!
+to this:
 
-We can also make sure that `prettier` will not format the file by adding `.prettierignore`.
-
-```yml
-node_modules
-ios
-android
-flowconfig
+```json
+{
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "lint": "eslint src",
+    "prettier": "prettier \"**/*.+(js|jsx|json|md|yml|graphql)\"",
+    "format": "yarn prettier --write",
+    "validate": "yarn lint && yarn list-different" // this will check whether or not our co-worker has prettier enable or not and list the difference
+  }
+}
 ```

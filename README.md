@@ -1,23 +1,14 @@
-## Add Validation Script
+## Intro to Flow type
 
-Sometimes, our co-worker does not have the same config like we do. In this case, we need to make sure that we protect those from happening. For example, when your co-worker disable `format-on-save` in his/her editor.
+Flow will enable us to catch bugs early in development time. It's being develop with Facebook to make sure their quality of their JS Code.
 
-It's very helpful to provide handy scripts to our `package.json` file to execute those.
+### Install Flow to project
 
-Let's rewrite this
-
-```json
-{
-  "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest",
-    "lint": "eslint src",
-    "format": "prettier --write \"**/*.+(js|jsx|json|md|yml|graphql)\""
-  }
-}
+```shell
+$ yarn add flow-bin --dev
 ```
 
-to this:
+Then, don't forget to add `flow` to our `script`
 
 ```json
 {
@@ -27,7 +18,69 @@ to this:
     "lint": "eslint src",
     "prettier": "prettier \"**/*.+(js|jsx|json|md|yml|graphql)\"",
     "format": "yarn prettier --write",
-    "validate": "yarn lint && yarn list-different" // this will check whether or not our co-worker has prettier enable or not and list the difference
+    // Add this to run flow binary
+    "typecheck": "flow",
+    "validate": "yarn lint && yarn prettier --list-different"
   }
+}
+```
+
+and dont't forget to initialize it with `yarn typecheck init`, if it already presents in your project, please make sure your version inside are the same.
+
+## Understanding FLow Config
+
+Please read [Documentation](https://flow.org/en/docs/config/) to understand more about this.
+
+```yml
+[ignore]
+
+[include]
+
+[libs]
+
+[options]
+
+[version]
+^0.86.0
+
+```
+
+## Ignore
+
+The [ignore] section in a .flowconfig file tells Flow to ignore files matching the specified regular expressions when type checking your code. By default, nothing is ignored.
+
+Things to keep in mind:
+
+- These are OCaml regular expressions.
+- These regular expressions match against absolute paths. They probably should start with .\*
+- Ignores are processed AFTER includes. If you both include and ignore a file it will be ignored.
+
+## Libs
+
+The [libs] section in a .flowconfig file tells Flow to include the specified library definitions when type checking your code
+
+### Running Flow
+
+add `//@flow` directives in top of your module to make sure flow check it.
+For example,
+
+```js
+//@flow
+
+import * as React from 'react';
+import {View, Text} from 'react-native';
+
+<!-- This will tell flow that our props contained object that has name property that is string -->
+type Props = {
+  name: string,
+};
+
+<!-- Here, we add the props so it will trying to figure out what props is -->
+function App(props: Props) {
+  return (
+    <View>
+      <Text>{props.value}</Text>
+    </View>
+  );
 }
 ```

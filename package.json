@@ -8,6 +8,7 @@
     "lint": "eslint src",
     "prettier": "prettier \"**/*.+(js|jsx|json|md|yml|graphql)\"",
     "format": "yarn prettier --write",
+    "typecheck": "flow",
     "validate": "yarn lint && yarn prettier --list-different"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
     "eslint": "^5.9.0",
     "eslint-plugin-babel": "^5.2.1",
     "eslint-plugin-react": "^7.11.1",
+    "flow-bin": "^0.78.0",
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.49.0",
     "prettier": "^1.15.1",

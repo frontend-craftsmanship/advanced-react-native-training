@@ -11,6 +11,7 @@ import {
 
 import Authentication from './screens/Authentication/Authentication';
 import Login from './screens/Login/Login';
+import Chart from './screens/Chart';
 import AddTransaction from './screens/AddTransaction/AddTransaction';
 import Dashboard from './screens/Dashboard/Dashboard';
 import TabBar from './components/TabBar';
@@ -34,11 +35,15 @@ let TransactionStack = createStackNavigator({
   addTransaction: AddTransaction,
 });
 
+let ChartStack = createStackNavigator({
+  chart: Chart,
+});
+
 let BottomNavigator = createBottomTabNavigator(
   {
     dashboard: DashboardStack,
     addTransaction: TransactionStack,
-    chart: TestingPage,
+    chart: ChartStack,
   },
   {
     lazy: false,

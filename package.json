@@ -19,8 +19,10 @@
     "react": "16.5.0",
     "react-native": "0.57.1",
     "react-native-calendars": "^1.21.0",
+    "react-native-svg": "^8.0.8",
     "react-native-vector-icons": "^6.0.2",
-    "react-navigation": "^2.18.0"
+    "react-navigation": "^2.8.0",
+    "victory-native": "^30.5.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",

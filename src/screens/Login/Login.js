@@ -8,7 +8,9 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
+import {graphql} from 'react-apollo';
 
+import {GET_USER_ROLE} from '../../graphql/queries/authentication';
 import {Button, Text} from '../../core-ui';
 import {WHITE, BLUE_SEA, LIGHT_GREY} from '../../constants/colors';
 import Logo from '../../images/logo.png';
@@ -19,7 +21,7 @@ type State = {
   activeTextInput: 'EMAIL' | 'PASSWORD' | null;
 };
 
-export default class Login extends Component<*, State> {
+class Login extends Component<*, State> {
   state = {
     email: '',
     password: '',
@@ -27,7 +29,12 @@ export default class Login extends Component<*, State> {
   };
 
   render() {
+    let {queryResult} = this.props;
     let {email, password, activeTextInput} = this.state;
+    let testEmail = !queryResult.loading ? queryResult.userState.email : email;
+    let tessPassword = !queryResult.loading
+      ? queryResult.userState.token
+      : password;
     return (
       <View style={styles.root}>
         <KeyboardAvoidingView behavior="padding">
@@ -38,6 +45,7 @@ export default class Login extends Component<*, State> {
             <Text>Username or Email</Text>
             <TextInput
               value={email}
+              placeholder={testEmail}
               onChangeText={(email) => this.setState({email})}
               onFocus={() => this._setActiveTextInput('EMAIL')}
               style={[
@@ -49,6 +57,7 @@ export default class Login extends Component<*, State> {
             <TextInput
               secureTextEntry
               value={password}
+              placeholder={tessPassword}
               onChangeText={(password) => this.setState({password})}
               onFocus={() => this._setActiveTextInput('PASSWORD')}
               style={[
@@ -96,3 +105,11 @@ let styles = StyleSheet.create({
     marginBottom: 50,
   },
 });
+
+export default graphql(GET_USER_ROLE, {
+  props: ({data}) => {
+    return {
+      queryResult: data,
+    };
+  },
+})(Login);

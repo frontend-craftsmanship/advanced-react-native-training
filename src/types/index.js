@@ -10,3 +10,17 @@ export type Category =
   | 'salary'
   | 'savings'
   | 'deposits';
+
+export type RootState = {
+  userState: {
+    __typename: string;
+    userID: string;
+    username: string;
+    token: string;
+  };
+  toastState: {
+    __typename: string;
+    message: string;
+    isOpen: boolean;
+  };
+};

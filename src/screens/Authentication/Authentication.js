@@ -1,7 +1,6 @@
 // @flow
 
 import React, {Component} from 'react';
-
 import {View, Image, ActivityIndicator} from 'react-native';
 
 import {WHITE, BLUE_SEA} from '../../constants/colors';

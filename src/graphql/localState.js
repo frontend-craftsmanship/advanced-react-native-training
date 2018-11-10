@@ -5,8 +5,8 @@ import type {RootState} from '../types';
 const defaultState: RootState = {
   userState: {
     __typename: 'userState',
-    userID: '1',
-    username: 'username',
+    id: '1',
+    name: 'username',
     email: 'username@kodefox.com',
     token: 'sometoken',
   },

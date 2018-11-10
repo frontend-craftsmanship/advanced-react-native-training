@@ -2,16 +2,20 @@
 
 import React, {Component} from 'react';
 import {View, Image, ActivityIndicator} from 'react-native';
+import {AsyncStorage} from 'react-native';
 
 import {WHITE, BLUE_SEA} from '../../constants/colors';
 import Logo from '../../images/logo.png';
 
 export default class Authentication extends Component<*, *> {
-  componentDidMount() {
-    // TODO: navigate according to whether token exist
-    setTimeout(() => {
+  async componentDidMount() {
+    let user = await AsyncStorage.getItem('@react-training:user');
+    // TODO: verifyToken
+    if (!user) {
       this.props.navigation.navigate('login');
-    }, 1500);
+    } else {
+      this.props.navigation.navigate('dashboard');
+    }
   }
 
   render() {

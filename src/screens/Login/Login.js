@@ -7,13 +7,19 @@ import {
   Image,
   TextInput,
   KeyboardAvoidingView,
+  ActivityIndicator,
+  AsyncStorage,
 } from 'react-native';
-import {graphql} from 'react-apollo';
+import {Mutation, graphql} from 'react-apollo';
 
-import {GET_USER_ROLE} from '../../graphql/queries/authentication';
+import {SAVE_USER_LOCAL, LOGIN} from '../../graphql/queries/authentication';
 import {Button, Text} from '../../core-ui';
-import {WHITE, BLUE_SEA, LIGHT_GREY} from '../../constants/colors';
+import {WHITE, BLUE_SEA, LIGHT_GREY, RED} from '../../constants/colors';
 import Logo from '../../images/logo.png';
+
+import type {NavigationScreenProp, NavigationState} from 'react-navigation';
+
+// AsyncStorage.removeItem('@react-training:user');
 
 type State = {
   email: string;
@@ -21,20 +27,20 @@ type State = {
   activeTextInput: 'EMAIL' | 'PASSWORD' | null;
 };
 
-class Login extends Component<*, State> {
+type Props = {
+  saveUser: (data: Object) => void;
+  navigation: NavigationScreenProp<NavigationState>;
+};
+
+class Login extends Component<Props, State> {
   state = {
-    email: '',
-    password: '',
+    email: 'admin@admin.com',
+    password: '1234',
     activeTextInput: null,
   };
 
   render() {
-    let {queryResult} = this.props;
     let {email, password, activeTextInput} = this.state;
-    let testEmail = !queryResult.loading ? queryResult.userState.email : email;
-    let tessPassword = !queryResult.loading
-      ? queryResult.userState.token
-      : password;
     return (
       <View style={styles.root}>
         <KeyboardAvoidingView behavior="padding">
@@ -45,7 +51,6 @@ class Login extends Component<*, State> {
             <Text>Username or Email</Text>
             <TextInput
               value={email}
-              placeholder={testEmail}
               onChangeText={(email) => this.setState({email})}
               onFocus={() => this._setActiveTextInput('EMAIL')}
               style={[
@@ -57,7 +62,6 @@ class Login extends Component<*, State> {
             <TextInput
               secureTextEntry
               value={password}
-              placeholder={tessPassword}
               onChangeText={(password) => this.setState({password})}
               onFocus={() => this._setActiveTextInput('PASSWORD')}
               style={[
@@ -66,12 +70,57 @@ class Login extends Component<*, State> {
               ]}
             />
           </View>
-          <Button
-            text="SIGN IN"
-            onPress={() => {
-              this.props.navigation.navigate('dashboard');
+          <Mutation
+            mutation={LOGIN}
+            update={async(cache, {data}) => {
+              let {navigation, saveUser} = this.props;
+              let {id, name, token, email} = data.login;
+              let userData = {
+                id,
+                name,
+                email,
+                token,
+              };
+              await Promise.all([
+                AsyncStorage.setItem(
+                  '@react-training:user',
+                  JSON.stringify(userData)
+                ),
+                saveUser({
+                  variables: userData,
+                }),
+              ]);
+              navigation.navigate('dashboard');
             }}
-          />
+          >
+            {(login, {loading, error}) => {
+              return (
+                <View>
+                  {!loading ? (
+                    <Button
+                      text="SIGN IN"
+                      onPress={() => {
+                        let {email, password} = this.state;
+                        login({
+                          variables: {
+                            email,
+                            password,
+                          },
+                        });
+                      }}
+                    />
+                  ) : (
+                    <ActivityIndicator size="large" color={BLUE_SEA} />
+                  )}
+                  {error && !loading && (
+                    <Text style={styles.error}>
+                      Wrong username or password!
+                    </Text>
+                  )}
+                </View>
+              );
+            }}
+          </Mutation>
         </KeyboardAvoidingView>
       </View>
     );
@@ -104,12 +153,13 @@ let styles = StyleSheet.create({
     borderBottomWidth: 2,
     marginBottom: 50,
   },
+  error: {
+    alignSelf: 'center',
+    color: RED,
+    marginTop: 10,
+  },
 });
 
-export default graphql(GET_USER_ROLE, {
-  props: ({data}) => {
-    return {
-      queryResult: data,
-    };
-  },
+export default graphql(SAVE_USER_LOCAL, {
+  name: 'saveUser',
 })(Login);

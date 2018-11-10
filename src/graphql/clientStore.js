@@ -15,7 +15,15 @@ const stateLink = withClientState({
   cache,
   defaults: defaultState,
   resolvers: {
-    Mutation: {},
+    Mutation: {
+      saveUser(_, params, context) {
+        context.cache.writeData({
+          __typename: 'userState',
+          ...params.data,
+        });
+        return null;
+      },
+    },
   },
 });
 

@@ -14,8 +14,8 @@ export type Category =
 export type RootState = {
   userState: {
     __typename: string;
-    userID: string;
-    username: string;
+    id: string;
+    name: string;
     token: string;
   };
   toastState: {

@@ -1,38 +1,33 @@
-### Code quality using Flow
+## Automatic Validate the code using Husky
 
-since flow will help us to find mismatch type and also documenting our code. We can take more benefit by validating our codebase. For example, we need our codebase has minimum treshold let's say 80%. We can enable it by using `flow-coverage-report`.
+Adding validate scripts are awesome, but, what if your co-worker forget to run it before commiting the code?
 
-to enable this, please install it as dev dependency
+### Husky for rescue
+
+Husky is a collection of git hooks available to download on npm. So, we can use it per project basis.
+
+Their description:
+
+> Husky can prevent bad git commit, git push and more 🐶 woof!
+
+## install husky
+
+Install husky as dev depedency
 
 ```shell
-$ yarn add flow-coverage-report --dev
+$ yarn add husky --dev
 ```
 
-and create a file called `.flowcoverage` that match this config:
+and add this on your `package.json`
 
 ```json
 {
-  "globExcludePatterns": ["node_modules/**"],
-  "globIncludePatterns": ["src/*.js"],
-  "outputDir": "flow-coverage",
-  "threshold": 80,
-  "reportTypes": ["html", "json", "text"]
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn validate"
+    }
+  }
 }
 ```
 
-and don't forget to update your scripts, so validate will work with our current setup.
-
-```json
-{
-  "start": "node node_modules/react-native/local-cli/cli.js start",
-  "test": "jest",
-  "lint": "eslint src --max-warnings 0",
-  "prettier": "prettier \"**/*.+(js|jsx|json|md|yml|graphql)\"",
-  "format": "yarn prettier --write",
-  "typecheck": "flow",
-  "flow-coverage": "flow-coverage-report --config ./.flowcoverage",
-  "validate": "yarn lint && yarn flow-coverage && yarn prettier --list-different "
-}
-```
-
-This will make sure that our code quality is consitent accross the codebase.
+And this will run everytime you commit your code and prevent your co-worker forget to run it.

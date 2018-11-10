@@ -28,9 +28,9 @@
   "rules": {
     "flowtype/delimiter-dangle": [1, "always-multiline"],
     "flowtype/no-dupe-keys": 2,
-    "flowtype/object-type-delimiter": [1, "semicolon"],
+    "flowtype/object-type-delimiter": [1, "comma"],
     "flowtype/semi": 1,
-    "flowtype/type-id-match": [1, "^[A-Z]"],
+    "flowtype/type-id-match": [2, "^[A-Z]"],
     "no-cond-assign": 1,
     "no-console": 1,
     "no-constant-condition": 1,

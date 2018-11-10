@@ -4,7 +4,7 @@ import * as React from 'react';
 import {View, Text} from 'react-native';
 
 type GreetingProps = {
-  name: string;
+  name: string,
 };
 
 function Greeting(props: GreetingProps) {

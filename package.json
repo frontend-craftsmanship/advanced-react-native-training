@@ -10,7 +10,7 @@
     "format": "yarn prettier --write",
     "typecheck": "flow",
     "flow-coverage": "flow-coverage-report --config ./.flowcoverage",
-    "validate": "yarn lint && yarn prettier --list-different && yarn flow-coverage"
+    "validate": "yarn lint && yarn flow-coverage && yarn prettier --list-different "
   },
   "dependencies": {
     "react": "16.6.0-alpha.8af6728",

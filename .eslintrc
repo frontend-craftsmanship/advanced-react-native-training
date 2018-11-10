@@ -1,0 +1,8 @@
+{
+  "parser": "babel-eslint", // we define the parser, so we're going to use babel eslint for this case
+  "extends": ["plugin:react/recommended"],
+  "plugins": ["babel", "react"],
+  "rules": {
+    "valid-typeof": "error" // there's another option like warn or off
+  }
+}

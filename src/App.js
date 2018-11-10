@@ -1,22 +1,24 @@
 // @flow
 
 import * as React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
-type GreetingProps = {
-  name: string,
-};
-
-function Greeting(props: GreetingProps) {
-  return <Text>{props.name}</Text>;
-}
-
-function App() {
+type Props = {};
+//eslint-disable-next-line
+function App(props: Props) {
   return (
-    <View>
-      <Greeting name={'Juang'} />
+    <View style={styles.wrapper}>
+      <Text>Hello World</Text>
     </View>
   );
 }
+
+let styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default App;

@@ -10,6 +10,7 @@
     "precommit": "lint-staged && yarn flow-coverage"
   },
   "dependencies": {
+    "class-autobind": "^0.1.4",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4"
   },

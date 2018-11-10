@@ -1,24 +1,34 @@
-## Automatic Validate the code using Husky
+## Lint-Staged
 
-Adding validate scripts are awesome, but, what if your co-worker forget to run it before commiting the code?
+Having git hooks are awesome, but what if we want to add more capabilities. For example, we just want to linting the file changes? here's linting staged description:
 
-### Husky for rescue
+> Linting makes more sense when run before committing your code. By doing so you can ensure no errors go into the repository and enforce code style. But running a lint process on a whole project is slow and linting results can be irrelevant. Ultimately you only want to lint files that will be committed.
 
-Husky is a collection of git hooks available to download on npm. So, we can use it per project basis.
+Awesome right?
 
-Their description:
+## Add lint staged
 
-> Husky can prevent bad git commit, git push and more 🐶 woof!
-
-## install husky
-
-Install husky as dev depedency
+install linted staged into dev dependecies
 
 ```shell
-$ yarn add husky --dev
+$ yarn add lint-staged --dev
 ```
 
-and add this on your `package.json`
+## configure your scripts inside package.json
+
+```json
+{
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "typecheck": "flow",
+    "flow-coverage": "flow-coverage-report --config ./.flowcoverage",
+    "precommit": "lint-staged && yarn flow-coverage"
+  }
+}
+```
+
+Remove this
 
 ```json
 {
@@ -30,4 +40,15 @@ and add this on your `package.json`
 }
 ```
 
-And this will run everytime you commit your code and prevent your co-worker forget to run it.
+and add this
+
+```json
+{
+  "linters": {
+    "*.js": ["eslint src --max-warnings 0"],
+    "**/*.+(js|jsx|json|md|yml|graphql)": ["prettier --write", "git add"]
+  }
+}
+```
+
+So, it will add the file if those requirements are met. And happy coding!

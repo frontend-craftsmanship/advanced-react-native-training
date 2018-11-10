@@ -1,0 +1,9 @@
+{
+    "linters": {
+        "*.js": ["eslint src --max-warnings 0"],
+        "**/*.+(js|jsx|json|md|yml|graphql)": [
+            "prettier --write",
+            "git add"
+        ]
+    }
+}

@@ -3,13 +3,12 @@
 import * as React from 'react';
 import {View, Text} from 'react-native';
 
-function Greeting(props) {
-  let {name} = props;
-  if (typeof name === 'string') {
-    return <Text>{`hello${name}`} </Text>;
-  } else {
-    return <Text>Hello Nobody</Text>;
-  }
+type GreetingProps = {
+  name: string;
+};
+
+function Greeting(props: GreetingProps) {
+  return <Text>{props.name}</Text>;
 }
 
 function App() {

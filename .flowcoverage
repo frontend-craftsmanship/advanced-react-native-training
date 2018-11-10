@@ -1,0 +1,15 @@
+{
+  "globExcludePatterns": [
+    "node_modules/**"
+  ],
+  "globIncludePatterns": [
+    "src/*.js"
+  ],
+  "outputDir": "flow-coverage",
+  "threshold": 80,
+  "reportTypes": [
+    "html",
+    "json",
+    "text"
+  ]
+}

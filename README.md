@@ -1,49 +1,77 @@
-## 05 - Check Point
+## Reducer Pattern
 
-In this branch, we will walk through the project directory. Lot of pattern already exist on React Community.
+Redux and Elm are successfully introduce the concept of `reducer` pattern, where given deterministic action, there will be some state returned.
 
-```shell
-├── App.js
-├── constants
-│   ├── appPreset.js
-│   ├── categories.js
-│   ├── colors.js
-│   ├── fixture.js
-│   └── textPresets.js
-├── core-ui
-│   ├── Button.js
-│   ├── Card.js
-│   ├── DropDown.js
-│   ├── Icon.js
-│   ├── Separator.js
-│   ├── Text.js
-│   ├── TextField.js
-│   └── index.js
-├── images
-│   └── logo.png
-├── screens
-│   └── Login
-│       └── Login.js
-└── types
-    └── index.js
+We're going to refactor `LoginScreen` to `reducer pattern` to see, how `redux` is actually subset of more general reducer `concept`.
+
+First, we're going to write reducer based on the state inside LoginScreen
+
+```js
+type InputType = 'EMAIL' | 'PASSWORD';
+
+type Action =
+  | {type: 'ChangeEmail', email: string}
+  | {type: 'ChangePassword', password: string}
+  | {type: 'SetActiveTextInput', activeTextInput: InputType};
+
+const INITIAL_STATE = {
+  email: '',
+  password: '',
+  activeTextInput: null,
+};
+
+let reducer = (action: Action) => (state = INITIAL_STATE) => {
+  switch (action.type) {
+    case 'ChangeEmail': {
+      return {
+        ...state,
+        email: action.email,
+      };
+    }
+    case 'ChangePassword': {
+      return {
+        ...state,
+        password: action.password,
+      };
+    }
+    case 'SetActiveTextInput': {
+      return {
+        ...state,
+        activeTextInput: action.activeTextInput,
+      };
+    }
+  }
+};
 ```
 
-Here's, after trying several patterns. For example, `container`, `components` structure. We found those patterns are really difficult to work with when the codebase grows. For example, at the beginning, we think some components are really just stateless component. But, when the feature is addeed, it became clear that the component should be inside `containers`. Secondly, we found that naming thing is difficult. When we are flatten the structure, the naming becomes problematic. Sometimes, we ended up using different suffix. For example, `CardContainer`, `CardWrapper`, `CardContainerWrapper`, and it's really difficult to know what component does unless we see the code.
+Inside the component we'll create a method called `dispatch` that works like `redux dispatcher`, except it only works on local state.
 
-## Core-UI
+```js
+dispatch = (action: Action) => {
+  this.setState(reducer(action));
+};
+```
 
-Inside the core-ui, we put the ui that is (like its name), core. So, every React Component can actually using this for the sake of design consitency.
+Then, change the setState to:
 
-## Constants
+```js
+<View>
+  <Text>Username or Email</Text>
+  <TextInput
+    value={email}
+    onChangeText={(email) => this.dispatch({type: 'ChangeEmail', email})}
+    onFocus={() =>
+      this.dispatch({
+        type: 'SetActiveTextInput',
+        activeTextInput: 'EMAIL',
+      })
+    }
+    style={[
+      styles.textInput,
+      activeTextInput === 'EMAIL' && styles.activeTextInput,
+    ]}
+  />
+</View>
+```
 
-Sometime, we might ended up adding more variables locally, inside the component. While it might be easy to add, but it will difficult to reason later. Especially, when design changes.
-
-## types
-
-Type will contain the type that will be shared accross the project.
-
-## screens / features
-
-If the application is small, we tend to put the screen directly inside `src` directory.
-
-> I think the bast way to structure your react project is by trying. There's no one size fits for all cases. Change the structure until you're happy to work with, and adding the feature is a breeze!
+Looks familiar?

@@ -1,73 +1,120 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import {
-  View,
-  StyleSheet,
   Image,
-  TextInput,
   KeyboardAvoidingView,
+  StyleSheet,
+  TextInput,
+  View,
 } from 'react-native';
-
+import Logo from '../../images/logo.png';
 import {Button, Text} from '../../core-ui';
 import {WHITE, BLUE_SEA, LIGHT_GREY} from '../../constants/colors';
-import Logo from '../../images/logo.png';
 
 type InputType = 'EMAIL' | 'PASSWORD';
 
-type Props = {|
-  email?: string,
-  onChangeEmail: (string) => void,
-  password?: string,
-  onChangePassword: (string) => void,
-  setActiveTextInput: (InputType) => void,
-  activeTextInput?: ?InputType,
-  onSubmit: () => void,
-|};
+type Action =
+  | {type: 'ChangeEmail', email: string}
+  | {type: 'ChangePassword', password: string}
+  | {type: 'SetActiveTextInput', activeTextInput: InputType};
 
-function Login(props: Props) {
-  let {
-    email,
-    password,
-    activeTextInput,
-    setActiveTextInput,
-    onSubmit,
-    onChangeEmail,
-    onChangePassword,
-  } = props;
-  return (
-    <View style={styles.root}>
-      <KeyboardAvoidingView behavior="padding">
-        <View style={styles.header}>
-          <Image source={Logo} style={{height: 200}} resizeMode="contain" />
-        </View>
-        <View>
-          <Text>Username or Email</Text>
-          <TextInput
-            value={email}
-            onChangeText={onChangeEmail}
-            onFocus={() => setActiveTextInput('EMAIL')}
-            style={[
-              styles.textInput,
-              activeTextInput === 'EMAIL' && styles.activeTextInput,
-            ]}
-          />
-          <Text>Password</Text>
-          <TextInput
-            secureTextEntry
-            value={password}
-            onChangeText={onChangePassword}
-            onFocus={() => setActiveTextInput('PASSWORD')}
-            style={[
-              styles.textInput,
-              activeTextInput === 'PASSWORD' && styles.activeTextInput,
-            ]}
-          />
-        </View>
-        <Button text="SIGN IN" onPress={onSubmit} />
-      </KeyboardAvoidingView>
-    </View>
-  );
+const INITIAL_STATE = {
+  email: '',
+  password: '',
+  activeTextInput: null,
+};
+
+let reducer = (action: Action) => (state = INITIAL_STATE) => {
+  switch (action.type) {
+    case 'ChangeEmail': {
+      return {
+        ...state,
+        email: action.email,
+      };
+    }
+    case 'ChangePassword': {
+      return {
+        ...state,
+        password: action.password,
+      };
+    }
+    case 'SetActiveTextInput': {
+      return {
+        ...state,
+        activeTextInput: action.activeTextInput,
+      };
+    }
+  }
+};
+
+type State = {
+  email: string,
+  password: string,
+  activeTextInput: 'EMAIL' | 'PASSWORD' | null,
+};
+
+class Login extends React.Component<{}, State> {
+  state = {
+    email: '',
+    password: '',
+    activeTextInput: null,
+  };
+
+  render() {
+    let {email, password, activeTextInput} = this.state;
+    return (
+      <View style={styles.root}>
+        <KeyboardAvoidingView behavior="padding">
+          <View style={styles.header}>
+            <Image source={Logo} style={{height: 200}} resizeMode="contain" />
+          </View>
+          <View>
+            <Text>Username or Email</Text>
+            <TextInput
+              value={email}
+              onChangeText={(email) =>
+                this.dispatch({type: 'ChangeEmail', email})
+              }
+              onFocus={() =>
+                this.dispatch({
+                  type: 'SetActiveTextInput',
+                  activeTextInput: 'EMAIL',
+                })
+              }
+              style={[
+                styles.textInput,
+                activeTextInput === 'EMAIL' && styles.activeTextInput,
+              ]}
+            />
+            <Text>Password</Text>
+            <TextInput
+              secureTextEntry
+              value={password}
+              onChangeText={(password) =>
+                this.dispatch({type: 'ChangePassword', password})
+              }
+              onFocus={() =>
+                this.dispatch({
+                  type: 'SetActiveTextInput',
+                  activeTextInput: 'PASSWORD',
+                })
+              }
+              style={[
+                styles.textInput,
+                activeTextInput === 'PASSWORD' && styles.activeTextInput,
+              ]}
+            />
+          </View>
+          <Button text="SIGN IN" onPress={() => {}} />
+        </KeyboardAvoidingView>
+      </View>
+    );
+  }
+
+  dispatch = (action: Action) => {
+    this.setState(reducer(action));
+  };
 }
 
 let styles = StyleSheet.create({

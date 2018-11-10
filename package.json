@@ -12,7 +12,8 @@
   "dependencies": {
     "class-autobind": "^0.1.4",
     "react": "16.6.0-alpha.8af6728",
-    "react-native": "0.57.4"
+    "react-native": "0.57.4",
+    "react-native-vector-icons": "^6.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

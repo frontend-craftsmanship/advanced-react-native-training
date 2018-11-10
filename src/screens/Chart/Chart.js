@@ -14,8 +14,8 @@ import {
 } from 'victory-native';
 import type {NavigationScreenProp, NavigationRoute} from 'react-navigation';
 
-import {DropDown, Icon, Text} from '../core-ui';
-import BalanceCard from './Dashboard/components/BalanceCard';
+import {DropDown, Icon, Text} from '../../core-ui';
+import BalanceCard from '../Dashboard/components/BalanceCard';
 import {
   BLACK,
   BLUE_SEA,
@@ -24,8 +24,8 @@ import {
   MAIN_TEXT,
   RED,
   WHITE,
-} from '../constants/colors';
-import {ANUAL_FINANCE_STATEMENTS} from '../constants/fixture';
+} from '../../constants/colors';
+import {ANUAL_FINANCE_STATEMENTS} from '../../constants/fixture';
 
 type State = {
   year: string;

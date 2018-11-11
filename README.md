@@ -1,77 +1,68 @@
-## Reducer Pattern
+## Counter example to introduce react pattern
 
-Redux and Elm are successfully introduce the concept of `reducer` pattern, where given deterministic action, there will be some state returned.
+- We're going to learn about pattern that availabe on React
 
-We're going to refactor `LoginScreen` to `reducer pattern` to see, how `redux` is actually subset of more general reducer `concept`.
-
-First, we're going to write reducer based on the state inside LoginScreen
+- Plain React with `React Class`
+- Reducer Pattern
+- HoC
+- Context
+- Render Props
+- Render Props + Reducer Pattern
+- Render Props + Context
+- Render Props + HoC
+- Render as Generator?
+- compose hoc
+- Combination between every pattern
+- Hooks
+- Tradeoff between those pattern
 
 ```js
-type InputType = 'EMAIL' | 'PASSWORD';
+// @flow
 
-type Action =
-  | {type: 'ChangeEmail', email: string}
-  | {type: 'ChangePassword', password: string}
-  | {type: 'SetActiveTextInput', activeTextInput: InputType};
+import React, {Component} from 'react';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 
-const INITIAL_STATE = {
-  email: '',
-  password: '',
-  activeTextInput: null,
-};
+import {Text} from '../../core-ui';
 
-let reducer = (action: Action) => (state = INITIAL_STATE) => {
-  switch (action.type) {
-    case 'ChangeEmail': {
-      return {
-        ...state,
-        email: action.email,
-      };
-    }
-    case 'ChangePassword': {
-      return {
-        ...state,
-        password: action.password,
-      };
-    }
-    case 'SetActiveTextInput': {
-      return {
-        ...state,
-        activeTextInput: action.activeTextInput,
-      };
-    }
+export default class Counter extends Component<*, *> {
+  state = {
+    counter: 0,
+  };
+
+  render() {
+    return (
+      <View style={styles.root}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.setState({counter: this.state.counter + 1});
+          }}
+        />
+        <Text style={styles.counterText}>{this.state.counter}</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.setState({counter: this.state.counter - 1});
+          }}
+        />
+      </View>
+    );
   }
-};
+}
+
+let styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: '#ffc425',
+    alignItems: 'center',
+  },
+  button: {
+    flex: 1,
+    width: '100%',
+  },
+  counterText: {
+    fontSize: 130,
+    color: 'white',
+  },
+});
 ```
-
-Inside the component we'll create a method called `dispatch` that works like `redux dispatcher`, except it only works on local state.
-
-```js
-dispatch = (action: Action) => {
-  this.setState(reducer(action));
-};
-```
-
-Then, change the setState to:
-
-```js
-<View>
-  <Text>Username or Email</Text>
-  <TextInput
-    value={email}
-    onChangeText={(email) => this.dispatch({type: 'ChangeEmail', email})}
-    onFocus={() =>
-      this.dispatch({
-        type: 'SetActiveTextInput',
-        activeTextInput: 'EMAIL',
-      })
-    }
-    style={[
-      styles.textInput,
-      activeTextInput === 'EMAIL' && styles.activeTextInput,
-    ]}
-  />
-</View>
-```
-
-Looks familiar?

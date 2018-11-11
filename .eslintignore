@@ -2,3 +2,4 @@ node_modules/*
 flow-coverage
 ios
 android
+flow-typed/*

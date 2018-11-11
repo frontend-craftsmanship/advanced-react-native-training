@@ -1,7 +1,11 @@
 {
   "parser": "babel-eslint", // we define the parser, so we're going to use babel eslint for this case
-  "extends": ["plugin:flowtype/recommended", "plugin:react/recommended"],
-  "plugins": ["babel", "flowtype", "react"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": ["babel", "flowtype", "react", "import"],
   "settings": {
     "react": {
       "version": "16.6.0-alpha.8af6728",
@@ -26,6 +30,11 @@
     "test": false
   },
   "rules": {
+    "import/no-unresolved": [2, {"commonjs": true, "amd": true}],
+    "import/named": 2,
+    "import/namespace": 2,
+    "import/default": 2,
+    "import/export": 2,
     "flowtype/delimiter-dangle": [1, "always-multiline"],
     "flowtype/no-dupe-keys": 2,
     "flowtype/object-type-delimiter": [1, "comma"],

@@ -1,17 +1,24 @@
-## MiniForm
+// @flow
 
-We're going to write reusable form that will accept
+import * as React from 'react';
 
-```js
+type Obj = {[key: string]: any};
+
 type Props = {
-  initialValues: {[key: string]: any},
-  validation: {[key: string]: (value: any) => boolean},
+  initialValues: Obj,
+  children: ({
+    values: Obj,
+    errors: ?Obj,
+    setValue: (string, mixed) => void,
+  }) => React$Node,
+  validation: {[key: string]: (mixed) => boolean},
 };
-```
 
-First, I will give you an example how do we write one. Using `Render Props`.
+type State = {
+  values: Obj,
+  errors: ?Obj,
+};
 
-```js
 class MiniForm extends React.Component<Props, State> {
   constructor() {
     super(...arguments);
@@ -61,28 +68,3 @@ class MiniForm extends React.Component<Props, State> {
 }
 
 export default MiniForm;
-```
-
-And let's refactor our login to use `MiniForm`
-
-```js
-function Login() {
-  return (
-    <MiniForm
-      initialValues={{email: '', password: ''}}
-      validation={{email: () => false, password: () => false}}
-    >
-      {({values, setValue, errors}) => {
-        return <LoginCode />;
-      }}
-    </MiniForm>
-  );
-}
-```
-
-So, your task is to:
-
-1. Refactor it to use `hoc`
-2. Refactor it to use `Context`
-3. Refactor it to use `reducer-pattern`
-4. Pick one to combine: `hoc` combine it with `reducer pattern` || `context` combine it with `hoc` || just pick one of your favorite

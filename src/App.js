@@ -8,13 +8,7 @@ import CounterComponent from './screens/Counter/CounterComponent';
 
 type Props = {};
 function App(props: Props) {
-  return (
-    <CounterComponent
-      counter={0}
-      onIncrement={() => {}}
-      onDecrement={() => {}}
-    />
-  );
+  return <Counter />;
 }
 
 export default withCounter(App);

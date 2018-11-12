@@ -5,7 +5,11 @@ import {View, StyleSheet, TouchableOpacity} from 'react-native';
 
 import {Text} from '../../core-ui';
 
-export default class Counter extends Component<*, *> {
+type Props = {};
+type State = {
+  counter: number,
+};
+export default class Counter extends Component<Props, State> {
   state = {
     counter: 0,
   };

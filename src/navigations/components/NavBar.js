@@ -2,26 +2,23 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
-type Props = {};
-type State = {
-  activeBar: number;
+type Props = {
+  navigateTo: (route: 'Transaction' | 'Dashboard' | 'Chart') => void;
+  activeRoute: 'Transaction' | 'Dashboard' | 'Chart';
 };
 
-const NAVS = ['HomePage', 'Transaction', 'Chart'];
-class NavBar extends React.Component<Props, State> {
-  state = {
-    activeBar: 1,
-  };
+const NAVS = ['Dashboard', 'Transaction', 'Chart'];
+class NavBar extends React.Component<Props> {
   render() {
-    let {activeBar} = this.state;
+    let {activeRoute} = this.props;
     return (
       <View style={styles.container}>
         {NAVS.map((nav, index) => (
           <TabBar
             key={index}
-            isActive={index === activeBar}
+            isActive={activeRoute === nav}
             title={nav}
-            onPress={() => this.setState({activeBar: index})}
+            onPress={() => this.props.navigateTo(nav)}
           />
         ))}
       </View>

@@ -1,42 +1,64 @@
 // @flow
 
 import * as React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View} from 'react-native';
 import Dashboard from './navigations/pages/Dashboard';
 import Transaction from './navigations/pages/Transaction';
 import Chart from './navigations/pages/Chart';
-
-type Props = {};
-type State = {
-  currentRoute: 'TRANSACTION' | 'DASHBOARD' | 'CHART';
+import NavBar from './navigations/components/NavBar';
+type Props = {
+  children: React$Node;
 };
-class App extends React.Component<Props, State> {
+type State = {
+  currentRoute: 'Transaction' | 'Dashboard' | 'Chart';
+};
+class Routes extends React.Component<Props, State> {
   state = {
-    currentRoute: 'TRANSACTION',
+    currentRoute: 'Chart',
   };
   render() {
-    switch (this.state.currentRoute) {
-      case 'TRANSACTION': {
-        return <Transaction navigateTo={this._navigateTo} />;
+    let children = React.Children.map(this.props.children, (child) => {
+      if (child.type.displayName === this.state.currentRoute) {
+        return React.cloneElement(child, {navigateTo: this._navigateTo});
+      } else {
+        return null;
       }
-      case 'CHART': {
-        return <Chart navigateTo={this._navigateTo} />;
-      }
-      default: {
-        return <Dashboard navigateTo={this._navigateTo} />;
-      }
-    }
+    });
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{flex: 1}}>{children}</View>
+        <NavBar
+          navigateTo={this._navigateTo}
+          activeRoute={this.state.currentRoute}
+        />
+      </View>
+    );
+    // switch (this.state.currentRoute) {
+    //   case 'TRANSACTION': {
+    //     return <Transaction navigateTo={this._navigateTo} />;
+    //   }
+    //   case 'CHART': {
+    //     return <Chart navigateTo={this._navigateTo} />;
+    //   }
+    //   default: {
+    //     return <Dashboard navigateTo={this._navigateTo} />;
+    //   }
+    // }
   }
 
-  _navigateTo = (route: 'TRANSACTION' | 'DASHBOARD' | 'CHART') => {
+  _navigateTo = (route: 'Transaction' | 'Dashboard' | 'Chart') => {
     this.setState({currentRoute: route});
   };
 }
 
-let styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+function App() {
+  return (
+    <Routes>
+      <Transaction />
+      <Chart />
+      <Dashboard />
+    </Routes>
+  );
+}
 
 export default App;

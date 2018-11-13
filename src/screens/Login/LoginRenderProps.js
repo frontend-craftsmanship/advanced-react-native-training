@@ -14,7 +14,7 @@ import {WHITE, BLUE_SEA, LIGHT_GREY} from '../../constants/colors';
 
 type InputType = 'EMAIL' | 'PASSWORD';
 
-type Action =
+export type Action =
   | {type: 'ChangeEmail', email: string}
   | {type: 'ChangePassword', password: string}
   | {type: 'SetActiveTextInput', activeTextInput: InputType};
@@ -45,14 +45,18 @@ let reducer = (action: Action) => (state = INITIAL_STATE) => {
         activeTextInput: action.activeTextInput,
       };
     }
-    default: {
-      return state;
-    }
   }
 };
 
 type Props = {
-  onSubmit: (email: string, password: string) => void,
+  children: ({
+    email: string,
+    password: string,
+    onChangeEmail: (string) => void,
+    onChangePassword: (string) => void,
+    activeTextInput: 'EMAIL' | 'PASSWORD' | null,
+    setActiveTextInput: ('EMAIL' | 'PASSWORD') => void,
+  }) => React$Node,
 };
 
 type State = {
@@ -70,54 +74,17 @@ class Login extends React.Component<Props, State> {
 
   render() {
     let {email, password, activeTextInput} = this.state;
-    let {onSubmit} = this.props;
-    return (
-      <View style={styles.root}>
-        <KeyboardAvoidingView behavior="padding">
-          <View style={styles.header}>
-            <Image source={Logo} style={{height: 200}} resizeMode="contain" />
-          </View>
-          <View>
-            <Text>Username or Email</Text>
-            <TextInput
-              value={email}
-              onChangeText={(email) =>
-                this.dispatch({type: 'ChangeEmail', email})
-              }
-              onFocus={() =>
-                this.dispatch({
-                  type: 'SetActiveTextInput',
-                  activeTextInput: 'EMAIL',
-                })
-              }
-              style={[
-                styles.textInput,
-                activeTextInput === 'EMAIL' && styles.activeTextInput,
-              ]}
-            />
-            <Text>Password</Text>
-            <TextInput
-              secureTextEntry
-              value={password}
-              onChangeText={(password) =>
-                this.dispatch({type: 'ChangePassword', password})
-              }
-              onFocus={() =>
-                this.dispatch({
-                  type: 'SetActiveTextInput',
-                  activeTextInput: 'PASSWORD',
-                })
-              }
-              style={[
-                styles.textInput,
-                activeTextInput === 'PASSWORD' && styles.activeTextInput,
-              ]}
-            />
-          </View>
-          <Button text="SIGN IN" onPress={() => onSubmit(email, password)} />
-        </KeyboardAvoidingView>
-      </View>
-    );
+    let {children} = this.props;
+    return children({
+      email,
+      password,
+      activeTextInput,
+      setActiveTextInput: (activeTextInput) =>
+        this.dispatch({type: 'SetActiveTextInput', activeTextInput}),
+      onChangeEmail: (email) => this.dispatch({type: 'ChangeEmail', email}),
+      onChangePassword: (password) =>
+        this.dispatch({type: 'ChangePassword', password}),
+    });
   }
 
   dispatch = (action: Action) => {

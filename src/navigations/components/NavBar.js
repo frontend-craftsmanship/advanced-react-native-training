@@ -16,8 +16,8 @@ class NavBar extends React.Component<Props> {
         {NAVS.map((nav, index) => (
           <TabBar
             key={index}
-            isActive={activeRoute === nav}
             title={nav}
+            isActive={activeRoute === nav}
             onPress={() => this.props.navigateTo(nav)}
           />
         ))}

@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import {View} from 'react-native';
+import {View, BackHandler} from 'react-native';
 import Dashboard from './navigations/pages/Dashboard';
 import Transaction from './navigations/pages/Transaction';
 import Chart from './navigations/pages/Chart';
@@ -16,10 +16,25 @@ class Routes extends React.Component<Props, State> {
   state = {
     currentRoute: 'Chart',
   };
+
+  _history = ['Chart'];
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this._goBack);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this._goBack);
+  }
+
   render() {
     let children = React.Children.map(this.props.children, (child) => {
       if (child.type.displayName === this.state.currentRoute) {
-        return React.cloneElement(child, {navigateTo: this._navigateTo});
+        console.log('>>>> : ', this.state);
+        return React.cloneElement(child, {
+          goBack: this._goBack,
+          navigateTo: this._navigateTo,
+        });
       } else {
         return null;
       }
@@ -33,6 +48,7 @@ class Routes extends React.Component<Props, State> {
         />
       </View>
     );
+
     // switch (this.state.currentRoute) {
     //   case 'TRANSACTION': {
     //     return <Transaction navigateTo={this._navigateTo} />;
@@ -46,7 +62,15 @@ class Routes extends React.Component<Props, State> {
     // }
   }
 
+  _goBack = () => {
+    this._history.pop();
+    let currentRoute = this._history[this._history.length - 1];
+    console.log('currentRoute : ', currentRoute);
+    this.setState({currentRoute});
+  };
+
   _navigateTo = (route: 'Transaction' | 'Dashboard' | 'Chart') => {
+    this._history.push(route);
     this.setState({currentRoute: route});
   };
 }

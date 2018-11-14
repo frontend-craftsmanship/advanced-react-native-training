@@ -1,41 +1,11 @@
 // @flow
 
 import {TRANSACTION_LIST} from '../fixture';
-
-type Transaction = {
-  id: string;
-  type: 'EXPENSE' | 'INCOME';
-  transactionDetail: string;
-  amount: string;
-  category: string;
-  date: string;
-};
-
-type Action =
-  | {
-      type: 'ADD_TRANSACTION';
-      payload: {
-        data: Transaction;
-      };
-    }
-  | {
-      type: 'DELETE_TRANSACTION';
-      payload: {
-        id: string;
-      };
-    }
-  | {
-      type: 'EDIT_TRANSACTION';
-      payload: {
-        data: Transaction;
-      };
-    };
-
-type InitialState = Array<Transaction>;
+import type {Transaction, TransactionAction} from '../../types';
 
 function transactionReducer(
-  state: InitialState = TRANSACTION_LIST,
-  action: Action
+  state: Array<Transaction> = TRANSACTION_LIST,
+  action: TransactionAction
 ) {
   switch (action.type) {
     case 'ADD_TRANSACTION':
@@ -61,10 +31,14 @@ function editTransaction(
   transactionList: Array<Transaction>,
   data: Transaction
 ) {
-  const updatedTransaction = transactionList.filter(
-    (transaction) => transaction.id === data.id
-  )[0];
-  return [...transactionList, updatedTransaction];
+  let newTransactionList = transactionList.map((transaction) => {
+    if (transaction.id === data.id) {
+      return data;
+    } else {
+      return transaction;
+    }
+  });
+  return [...newTransactionList];
 }
 
 function deleteTransaction(transactionList: Array<Transaction>, id: string) {

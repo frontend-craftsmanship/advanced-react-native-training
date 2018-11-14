@@ -7,11 +7,14 @@ import {connect} from 'react-redux';
 import TransactionCard from './components/TransactionCard';
 import BalanceCard from './components/BalanceCard';
 import {BLUE_SEA, RED} from '../../constants/colors';
+import type {Transaction} from '../../types/index';
 
-class Dashboard extends Component<*, *> {
+type Props = {
+  transactionList: Array<Transaction>;
+};
+
+class Dashboard extends Component<Props, *> {
   render() {
-    console.log(this.props);
-    console.log(connect);
     return (
       <View style={{padding: 10, flex: 1}}>
         <View style={{flexDirection: 'row'}}>
@@ -38,4 +41,5 @@ const mapStateToProps = (state: *) => {
     transactionList: state.transaction,
   };
 };
+
 export default connect(mapStateToProps)(Dashboard);

@@ -7,17 +7,9 @@ import {Card, Icon} from '../../../core-ui';
 import {categoryToIconName} from '../../../generals/utils';
 import {BLUE_SEA, RED} from '../../../constants/colors';
 
-import type {Category} from '../../../types';
+import type {Transaction} from '../../../types';
 
-type TransactionCardProps = {
-  type: 'EXPENSE' | 'INCOME';
-  transactionDetail: string;
-  amount: string;
-  category: Category;
-  date: string;
-};
-
-export default function TransactionCard(props: TransactionCardProps) {
+export default function TransactionCard(props: Transaction) {
   let {type, transactionDetail, amount, category, date} = props;
   let isIncome = type === 'INCOME';
   return (

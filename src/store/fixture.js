@@ -1,4 +1,4 @@
-export const TRANSACTION_LIST: InitialState = [
+export const TRANSACTION_LIST = [
   {
     id: 'isuyfsd876',
     type: 'EXPENSE',

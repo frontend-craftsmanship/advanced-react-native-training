@@ -8,10 +8,12 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
+import {connect} from 'react-redux';
 
 import {Button, Text} from '../../core-ui';
 import {WHITE, BLUE_SEA, LIGHT_GREY} from '../../constants/colors';
 import Logo from '../../images/logo.png';
+import type {LoginState, RootState, RootAction} from '../../types';
 
 type State = {
   email: string;
@@ -19,7 +21,18 @@ type State = {
   activeTextInput: 'EMAIL' | 'PASSWORD' | null;
 };
 
-export default class Login extends Component<*, State> {
+type UserData = {
+  email: string;
+  password: string;
+};
+
+type Props = {
+  login: LoginState;
+  loginUser: (data: UserData) => void;
+  navigation: Object;
+};
+
+class Login extends Component<Props, State> {
   state = {
     email: '',
     password: '',
@@ -27,6 +40,7 @@ export default class Login extends Component<*, State> {
   };
 
   render() {
+    let {login, loginUser} = this.props;
     let {email, password, activeTextInput} = this.state;
     return (
       <View style={styles.root}>
@@ -38,6 +52,7 @@ export default class Login extends Component<*, State> {
             <Text>Username or Email</Text>
             <TextInput
               value={email}
+              placeholder={login.email}
               onChangeText={(email) => this.setState({email})}
               onFocus={() => this._setActiveTextInput('EMAIL')}
               style={[
@@ -49,6 +64,7 @@ export default class Login extends Component<*, State> {
             <TextInput
               secureTextEntry
               value={password}
+              placeholder={login.password}
               onChangeText={(password) => this.setState({password})}
               onFocus={() => this._setActiveTextInput('PASSWORD')}
               style={[
@@ -60,6 +76,11 @@ export default class Login extends Component<*, State> {
           <Button
             text="SIGN IN"
             onPress={() => {
+              let data = {
+                email: this.state.email,
+                password: this.state.password,
+              };
+              loginUser(data);
               this.props.navigation.navigate('dashboard');
             }}
           />
@@ -96,3 +117,21 @@ let styles = StyleSheet.create({
     marginBottom: 50,
   },
 });
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    login: state.login,
+  };
+};
+
+const mapDispatchToProps = (dispatch: (action: RootAction) => void) => {
+  return {
+    loginUser: (data: UserData) =>
+      dispatch({type: 'LOGIN_USER', payload: {data}}),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

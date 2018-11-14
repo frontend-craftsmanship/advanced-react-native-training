@@ -1,13 +1,19 @@
 // @flow
 
 import React, {Component} from 'react';
-
 import {View, Image, ActivityIndicator} from 'react-native';
+import {connect} from 'react-redux';
 
 import {WHITE, BLUE_SEA} from '../../constants/colors';
 import Logo from '../../images/logo.png';
+import type {RootState} from '../../types';
 
-export default class Authentication extends Component<*, *> {
+type Props = {
+  token: string;
+  navigation: Object;
+};
+
+class Authentication extends Component<Props, *> {
   componentDidMount() {
     // TODO: navigate according to whether token exist
     setTimeout(() => {
@@ -31,3 +37,11 @@ export default class Authentication extends Component<*, *> {
     );
   }
 }
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    token: state.login.token,
+  };
+};
+
+export default connect(mapStateToProps)(Authentication);

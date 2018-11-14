@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {coduct} from '../../reduct/react-reduct';
 
 import {Text} from '../../core-ui';
 
@@ -29,7 +30,7 @@ let reducer = (action) => (state) => {
     }
   }
 };
-export default class Counter extends Component<Props, State> {
+class Counter extends Component<Props, State> {
   state = {
     counter: 0,
   };
@@ -74,3 +75,7 @@ let styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+export default coduct((state) => ({state}), (dispatch) => ({dispatch}))(
+  Counter,
+);

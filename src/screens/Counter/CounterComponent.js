@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {coduct} from '../../reduct/react-reduct';
 
 import {Text} from '../../core-ui';
 
@@ -13,6 +14,7 @@ type Props = {
 
 function Counter(props: Props) {
   let {counter, onIncrement, onDecrement} = props;
+  console.log('props', props);
   return (
     <View style={styles.root}>
       <TouchableOpacity style={styles.button} onPress={onIncrement} />
@@ -38,4 +40,21 @@ let styles = StyleSheet.create({
   },
 });
 
-export default Counter;
+let mapStateToProps = (state) => {
+  return {
+    counter: state.counter,
+  };
+};
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+    onIncrement() {
+      return dispatch({type: 'INCREMENT'});
+    },
+    onDecrement() {
+      return dispatch({type: 'DECREMENT'});
+    },
+  };
+};
+
+export default coduct(mapStateToProps, mapDispatchToProps)(Counter);

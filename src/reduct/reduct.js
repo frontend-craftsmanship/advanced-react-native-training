@@ -24,10 +24,9 @@ function createStore(reducer, initialState) {
   let dispatch = (action) => {
     currentState = currentReducer(currentState, action);
     listeners.slice().forEach((listener) => listener());
-    return action;
   };
 
-  dispatch({type: '@@redux/INIT'});
+  dispatch({type: undefined});
 
   return {
     getState,

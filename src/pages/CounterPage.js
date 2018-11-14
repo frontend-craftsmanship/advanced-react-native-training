@@ -7,6 +7,7 @@ class CounterPage extends React.Component<*, *> {
   state = {
     counter: 0,
   };
+
   render() {
     return <View style={styles.container}>{this._renderCounter()}</View>;
   }

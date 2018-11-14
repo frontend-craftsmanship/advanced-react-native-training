@@ -3,15 +3,15 @@
 import * as React from 'react';
 import {Provider} from 'react-redux';
 
-import CounterPage from './pages/CounterPage';
 import store from './store/createStore';
+import Dashboard from './screens/Dashboard/Dashboard';
 type Props = {};
 type State = {};
 class App extends React.Component<Props, State> {
   render() {
     return (
       <Provider store={store}>
-        <CounterPage />
+        <Dashboard />
       </Provider>
     );
   }

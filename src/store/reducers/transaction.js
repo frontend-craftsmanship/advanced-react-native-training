@@ -1,5 +1,7 @@
 // @flow
 
+import {TRANSACTION_LIST} from '../fixture';
+
 type Transaction = {
   id: string;
   type: 'EXPENSE' | 'INCOME';
@@ -30,43 +32,9 @@ type Action =
     };
 
 type InitialState = Array<Transaction>;
-let INITIAL_STATE: InitialState = [
-  {
-    id: 'isuyfsd876',
-    type: 'EXPENSE',
-    transactionDetail: 'Fine Dining at Jakarta',
-    amount: '$30.00',
-    category: 'food',
-    date: new Date().toISOString(),
-  },
-  {
-    id: '8sd9fsfasd',
-    type: 'EXPENSE',
-    transactionDetail: 'Bape Exclusive Cloth',
-    amount: '$530.00',
-    category: 'clothes',
-    date: new Date().toISOString(),
-  },
-  {
-    id: '89asdy98ah',
-    type: 'INCOME',
-    transactionDetail: 'Salary Month 1',
-    amount: '$3000.00',
-    category: 'salary',
-    date: new Date().toISOString(),
-  },
-  {
-    id: '18271h1nf',
-    type: 'EXPENSE',
-    transactionDetail: 'Uber from Fatmawati to Gading Serpong',
-    amount: '$23.00',
-    category: 'transportation',
-    date: new Date().toISOString(),
-  },
-];
 
 function transactionReducer(
-  state: InitialState = INITIAL_STATE,
+  state: InitialState = TRANSACTION_LIST,
   action: Action
 ) {
   switch (action.type) {
@@ -77,7 +45,7 @@ function transactionReducer(
     case 'DELETE_TRANSACTION':
       return deleteTransaction(state, action.payload.id);
     default:
-      state;
+      return state;
   }
 }
 
@@ -93,11 +61,17 @@ function editTransaction(
   transactionList: Array<Transaction>,
   data: Transaction
 ) {
-  const updatedTransaction = transactionList;
-
-  return newTransactionList;
+  const updatedTransaction = transactionList.filter(
+    (transaction) => transaction.id === data.id
+  )[0];
+  return [...transactionList, updatedTransaction];
 }
 
-function deleteTransaction(transactionList: Array<Transaction>, id: string) {}
+function deleteTransaction(transactionList: Array<Transaction>, id: string) {
+  let newTransactionList = transactionList.filter(
+    (transaction) => transaction.id !== id
+  );
+  return [...newTransactionList];
+}
 
 export default transactionReducer;

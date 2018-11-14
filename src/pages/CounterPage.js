@@ -3,7 +3,7 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
-import type {InitialState, Action} from '../store/reducers';
+import type {InitialState, Action} from '../store/reducers/counter';
 
 class CounterPage extends React.Component<*, *> {
   render() {

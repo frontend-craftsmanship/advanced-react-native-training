@@ -5,6 +5,6 @@ import Login from './Login/Login';
 import Chart from './Chart/Chart';
 import AddTransaction from './AddTransaction/AddTransaction';
 import Dashboard from './Dashboard/Dashboard';
-import BlankPage from './BlankPage';
+import Logout from './Logout';
 
-export {AddTransaction, Authentication, BlankPage, Chart, Dashboard, Login};
+export {AddTransaction, Authentication, Logout, Chart, Dashboard, Login};

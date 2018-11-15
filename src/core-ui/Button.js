@@ -18,7 +18,7 @@ type Props = {
   iconLeft?: string;
   iconRight?: string;
   style?: Array<Object>; //TODO: Need to set a global type for StyleSheet on flow-typed
-  onPress: () => void;
+  onPress: () => void | Promise<*>;
 };
 
 function Button(props: Props) {

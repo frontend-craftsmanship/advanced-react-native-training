@@ -25,7 +25,7 @@ import {
   RED,
   WHITE,
 } from '../../constants/colors';
-import {ANUAL_FINANCE_STATEMENTS} from '../../constants/fixture';
+import {ANNUAL_FINANCE_STATEMENTS} from '../../constants/fixture';
 
 type State = {
   year: string;
@@ -128,8 +128,8 @@ class Chart extends React.Component<{}, State> {
   _renderBalanceCards() {
     return (
       <View style={{flexDirection: 'row', padding: 5}}>
-        <BalanceCard title="Income" amount="$13,500.00" color={BLUE_SEA} />
-        <BalanceCard title="Expense" amount="$49,000.00" color={RED} />
+        <BalanceCard title="Income" amount={13500} color={BLUE_SEA} />
+        <BalanceCard title="Expense" amount={49000} color={RED} />
       </View>
     );
   }
@@ -155,7 +155,7 @@ class Chart extends React.Component<{}, State> {
             axisLabel: {fontSize: 14, padding: 30},
             axis: {stroke: '#756f6a'},
           }}
-          tickValues={ANUAL_FINANCE_STATEMENTS[year].income.map(
+          tickValues={ANNUAL_FINANCE_STATEMENTS[year].income.map(
             (datum) => datum.x
           )}
         />
@@ -164,7 +164,7 @@ class Chart extends React.Component<{}, State> {
           labelComponent={
             <VictoryTooltip style={{fontSize: 14, fontColor: '#4080D7'}} />
           }
-          data={ANUAL_FINANCE_STATEMENTS[year].income}
+          data={ANNUAL_FINANCE_STATEMENTS[year].income}
         >
           <VictoryLine
             interpolation="catmullRom"
@@ -180,7 +180,7 @@ class Chart extends React.Component<{}, State> {
         <VictoryGroup
           labels={(d) => `y: ${d.y}`}
           labelComponent={<VictoryTooltip style={{fontSize: 10}} />}
-          data={ANUAL_FINANCE_STATEMENTS[year].expense}
+          data={ANNUAL_FINANCE_STATEMENTS[year].expense}
         >
           <VictoryLine
             interpolation="catmullRom"

@@ -19,8 +19,6 @@ import Logo from '../../images/logo.png';
 
 import type {NavigationScreenProp, NavigationState} from 'react-navigation';
 
-// AsyncStorage.removeItem('@react-training:user');
-
 type State = {
   email: string;
   password: string;

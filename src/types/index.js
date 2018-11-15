@@ -1,15 +1,15 @@
 // @flow
 
 export type Category =
-  | 'food'
-  | 'clothes'
-  | 'communications'
-  | 'entertainment'
-  | 'transportation'
-  | 'bills'
-  | 'salary'
-  | 'savings'
-  | 'deposits';
+  | 'FOOD'
+  | 'CLOTHES'
+  | 'COMMUNICATIONS'
+  | 'ENTERTAINMENT'
+  | 'TRANSPORTATION'
+  | 'BILLS'
+  | 'SALARY'
+  | 'SAVINGS'
+  | 'DEPOSITS';
 
 export type RootState = {
   userState: {

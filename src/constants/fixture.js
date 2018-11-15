@@ -35,7 +35,7 @@ const TRANSACTIONS_DATA = [
   },
 ];
 
-const ANUAL_FINANCE_STATEMENTS: {[string | number]: Object} = {
+const ANNUAL_FINANCE_STATEMENTS: {[string | number]: Object} = {
   [2016]: {
     income: [
       {x: 'Jul', y: 250},
@@ -128,4 +128,4 @@ const ANUAL_FINANCE_STATEMENTS: {[string | number]: Object} = {
   },
 };
 
-export {ANUAL_FINANCE_STATEMENTS, TRANSACTIONS_DATA};
+export {ANNUAL_FINANCE_STATEMENTS, TRANSACTIONS_DATA};

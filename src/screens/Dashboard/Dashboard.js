@@ -1,49 +1,17 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, ActivityIndicator} from 'react-native';
+import {Query} from 'react-apollo';
 
 import {Text, Icon} from '../../core-ui';
 import TransactionCard from './components/TransactionCard';
 import BalanceCard from './components/BalanceCard';
 import {BLUE_SEA, RED, WHITE, BLACK} from '../../constants/colors';
+import {GET_TRANSACTIONS} from '../../graphql/queries/dashboard';
 
 import type {NavigationScreenProp, NavigationRoute} from 'react-navigation';
-
-const TRANSACTIONS_DATA = [
-  {
-    id: 'isuyfsd876',
-    type: 'EXPENSE',
-    transactionDetail: 'Fine Dining at Jakarta',
-    amount: '$30.00',
-    category: 'food',
-    date: new Date().toISOString(),
-  },
-  {
-    id: '8sd9fsfasd',
-    type: 'EXPENSE',
-    transactionDetail: 'Bape Exclusive Cloth',
-    amount: '$530.00',
-    category: 'clothes',
-    date: new Date().toISOString(),
-  },
-  {
-    id: '89asdy98ah',
-    type: 'INCOME',
-    transactionDetail: 'Salary Month 1',
-    amount: '$3000.00',
-    category: 'salary',
-    date: new Date().toISOString(),
-  },
-  {
-    id: '18271h1nf',
-    type: 'EXPENSE',
-    transactionDetail: 'Uber from Fatmawati to Gading Serpong',
-    amount: '$23.00',
-    category: 'transportation',
-    date: new Date().toISOString(),
-  },
-];
+import type {Transaction} from './components/TransactionCard';
 
 class Dashboard extends Component<*, *> {
   static navigationOptions = ({
@@ -70,24 +38,58 @@ class Dashboard extends Component<*, *> {
 
   render() {
     return (
-      <View style={{backgroundColor: WHITE, flex: 1}}>
-        <View style={{padding: 15, flexDirection: 'row'}}>
-          <BalanceCard title="Income" amount="$13,500.00" color={BLUE_SEA} />
-          <BalanceCard title="Expense" amount="$49,000.00" color={RED} />
-        </View>
-        <View style={{marginTop: 5, flex: 1}}>
-          <Text size="medium" style={{marginBottom: 5, paddingHorizontal: 15}}>
-            History
-          </Text>
-          <FlatList
-            data={TRANSACTIONS_DATA}
-            renderItem={({item}) => <TransactionCard {...item} />}
-            keyExtractor={({id}) => id}
-            style={{flex: 1}}
-          />
-        </View>
-      </View>
+      <Query query={GET_TRANSACTIONS}>
+        {({loading, data}) => {
+          return (
+            <View style={{backgroundColor: WHITE, flex: 1}}>
+              <View style={{padding: 15, flexDirection: 'row'}}>
+                <BalanceCard
+                  title="Income"
+                  amount={this._getAmount(data.transactions, 'INCOME')}
+                  color={BLUE_SEA}
+                />
+                <BalanceCard
+                  title="Expense"
+                  amount={this._getAmount(data.transactions, 'EXPENSE')}
+                  color={RED}
+                />
+              </View>
+              <View style={{marginTop: 5, flex: 1}}>
+                <Text
+                  size="medium"
+                  style={{marginBottom: 5, paddingHorizontal: 15}}
+                >
+                  History
+                </Text>
+                {loading ? (
+                  <View style={{flex: 1, justifyContent: 'center'}}>
+                    <ActivityIndicator size="large" />
+                  </View>
+                ) : (
+                  <FlatList
+                    data={data.transactions}
+                    renderItem={({item}) => <TransactionCard {...item} />}
+                    keyExtractor={({id}) => id}
+                    style={{flex: 1}}
+                  />
+                )}
+              </View>
+            </View>
+          );
+        }}
+      </Query>
     );
+  }
+
+  _getAmount(
+    transactions: ?Array<Transaction>,
+    type: 'INCOME' | 'EXPENSE'
+  ): number {
+    return transactions
+      ? transactions
+        .filter((transaction) => transaction.type === type)
+        .reduce((total, {amount}) => total + amount, 0)
+      : 0;
   }
 }
 

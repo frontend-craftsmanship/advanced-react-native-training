@@ -10,7 +10,7 @@ import {
 import {
   AddTransaction,
   Authentication,
-  BlankPage,
+  Logout,
   Chart,
   Dashboard,
   Login,
@@ -44,7 +44,7 @@ let BottomNavigator = createBottomTabNavigator(
 
 let DrawerNavigator = createDrawerNavigator({
   dashboard: BottomNavigator,
-  about: BlankPage,
+  logout: Logout,
 });
 
 let MainNavigator = createSwitchNavigator({

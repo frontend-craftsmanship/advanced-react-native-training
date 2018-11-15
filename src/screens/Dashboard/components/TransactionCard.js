@@ -9,15 +9,15 @@ import {BLUE_SEA, RED} from '../../../constants/colors';
 
 import type {Category} from '../../../types';
 
-type TransactionCardProps = {
+export type Transaction = {
   type: 'EXPENSE' | 'INCOME';
   transactionDetail: string;
-  amount: string;
+  amount: number;
   category: Category;
   date: string;
 };
 
-export default function TransactionCard(props: TransactionCardProps) {
+export default function TransactionCard(props: Transaction) {
   let {type, transactionDetail, amount, category, date} = props;
   let isIncome = type === 'INCOME';
   return (

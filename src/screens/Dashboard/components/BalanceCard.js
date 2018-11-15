@@ -7,7 +7,7 @@ import {WHITE} from '../../../constants/colors';
 
 type BalanceCardProps = {
   title: string;
-  amount: string;
+  amount: number;
   color: string;
 };
 
@@ -23,9 +23,13 @@ export default function BalanceCard(props: BalanceCardProps) {
       ]}
     >
       <Text style={{fontSize: 16, color: WHITE}}>{title}</Text>
-      <Text style={{fontSize: 22, color: WHITE}}>{amount}</Text>
+      <Text style={{fontSize: 22, color: WHITE}}>{amountToDollar(amount)}</Text>
     </View>
   );
+}
+
+function amountToDollar(amount: number) {
+  return `$${amount}.00`;
 }
 
 let balanceCardStyles = StyleSheet.create({

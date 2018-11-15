@@ -5,12 +5,22 @@ import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 type Props = {
   navigateTo: (
-    route: 'Login' | 'AddTransaction' | 'Dashboard' | 'Chart'
+    route: 'Authentication' | 'Login' | 'AddTransaction' | 'Dashboard' | 'Chart'
   ) => void;
-  activeRoute: 'Login' | 'AddTransaction' | 'Dashboard' | 'Chart';
+  activeRoute: | 'Authentication'
+    | 'Login'
+    | 'AddTransaction'
+    | 'Dashboard'
+    | 'Chart';
 };
 
-const NAVS = ['Login', 'Dashboard', 'AddTransaction', 'Chart'];
+const NAVS = [
+  'Authentication',
+  'Login',
+  'Dashboard',
+  'AddTransaction',
+  'Chart',
+];
 class NavBar extends React.Component<Props> {
   render() {
     let {activeRoute} = this.props;

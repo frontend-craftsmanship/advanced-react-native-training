@@ -3,15 +3,17 @@
 import React, {Fragment, Component} from 'react';
 import {View, Button} from 'react-native';
 
-import {Card} from '../../core-ui';
+import {Card, Icon} from '../../core-ui';
 import {ItemList} from '../../components';
 import {categoryToIconName} from '../../generals/utils';
+import {WHITE, BLACK} from '../../constants/colors';
 
 import SelectCategory from './components/SelectCategory';
 import SelectDate from './components/SelectDate';
 import CashflowStat from './components/CashflowStat';
 import AddTransactionDetail from './components/AddTransactionDetail';
 
+import type {NavigationScreenProp, NavigationRoute} from 'react-navigation';
 import type {Category} from '../../types';
 type Props = {
   goBack?: () => void;
@@ -29,6 +31,27 @@ type State = {
 };
 
 export default class AddTransaction extends Component<Props, State> {
+  static navigationOptions = ({
+    navigation,
+  }: {
+    navigation: NavigationScreenProp<NavigationRoute>;
+  }) => {
+    return {
+      headerTitle: 'Add Transaction',
+      headerLeft: (
+        <View style={{paddingHorizontal: 20}}>
+          <Icon
+            name="bars"
+            size={18}
+            color={BLACK}
+            onPress={() => {
+              navigation.toggleDrawer && navigation.toggleDrawer();
+            }}
+          />
+        </View>
+      ),
+    };
+  };
   state = {
     transactionAmount: 0,
     selectedCategory: null,
@@ -43,7 +66,7 @@ export default class AddTransaction extends Component<Props, State> {
 
   render() {
     return (
-      <View style={{padding: 10}}>
+      <View style={{flex: 1, padding: 10, backgroundColor: WHITE}}>
         {this._renderCashflowStat()}
         {this._renderItemList()}
         {this._renderModals()}

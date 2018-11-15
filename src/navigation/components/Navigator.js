@@ -9,7 +9,11 @@ type Props = {
 };
 
 type State = {
-  currentRoute: 'Login' | 'AddTransaction' | 'Dashboard' | 'Chart';
+  currentRoute: | 'Authentication'
+    | 'Login'
+    | 'AddTransaction'
+    | 'Dashboard'
+    | 'Chart';
 };
 
 class Navigator extends React.Component<Props, State> {
@@ -56,7 +60,9 @@ class Navigator extends React.Component<Props, State> {
     this.setState({currentRoute});
   };
 
-  _navigateTo = (route: 'Login' | 'AddTransaction' | 'Dashboard' | 'Chart') => {
+  _navigateTo = (
+    route: 'Authentication' | 'Login' | 'AddTransaction' | 'Dashboard' | 'Chart'
+  ) => {
     this._history.push(route);
     this.setState({currentRoute: route});
   };

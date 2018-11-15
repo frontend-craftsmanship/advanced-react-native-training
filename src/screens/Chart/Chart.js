@@ -16,6 +16,7 @@ import {
 import {DropDown, Icon, Text} from '../../core-ui';
 import BalanceCard from '../Dashboard/components/BalanceCard';
 import {
+  BLACK,
   BLUE_SEA,
   LIGHT_BORDER,
   LIGHT_GREY,
@@ -24,6 +25,7 @@ import {
   WHITE,
 } from '../../constants/colors';
 import {ANUAL_FINANCE_STATEMENTS} from '../../constants/fixture';
+import type {NavigationScreenProp, NavigationRoute} from 'react-navigation';
 
 type State = {
   year: string;
@@ -46,6 +48,27 @@ const YEARS = [
 ];
 
 class Chart extends React.Component<{}, State> {
+  static navigationOptions = ({
+    navigation,
+  }: {
+    navigation: NavigationScreenProp<NavigationRoute>;
+  }) => {
+    return {
+      headerTitle: 'Chart',
+      headerLeft: (
+        <View style={{paddingHorizontal: 20}}>
+          <Icon
+            name="bars"
+            size={18}
+            color={BLACK}
+            onPress={() => {
+              navigation.toggleDrawer && navigation.toggleDrawer();
+            }}
+          />
+        </View>
+      ),
+    };
+  };
   constructor() {
     super();
     this.state = {

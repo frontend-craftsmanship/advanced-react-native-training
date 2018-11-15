@@ -78,6 +78,7 @@ class Login extends Component<*, State> {
     let {submit} = this.props;
     if (submit) {
       submit({email, password});
+      this.props.navigation.navigate('dashboard');
     }
   };
   _setActiveTextInput(activeTextInput: 'EMAIL' | 'PASSWORD' | null) {

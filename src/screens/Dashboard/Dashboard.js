@@ -1,18 +1,21 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 
+import {Text, Icon} from '../../core-ui';
 import TransactionCard from './components/TransactionCard';
 import BalanceCard from './components/BalanceCard';
-import {BLUE_SEA, RED} from '../../constants/colors';
+import {BLUE_SEA, RED, WHITE, BLACK} from '../../constants/colors';
 import {formatNumberComma} from '../../helpers/formatNumberToCurrency';
 import type {Transaction} from '../../types/index';
+import type {NavigationScreenProp, NavigationRoute} from 'react-navigation';
 
 type Props = {
   addTransaction: () => void;
   transactionList: Array<Transaction>;
+  navigation: Object;
 };
 
 type State = {
@@ -20,6 +23,28 @@ type State = {
   tempTransactionList: Array<Transaction>;
 };
 class Dashboard extends Component<Props, State> {
+  static navigationOptions = ({
+    navigation,
+  }: {
+    navigation: NavigationScreenProp<NavigationRoute>;
+  }) => {
+    return {
+      headerTitle: 'Dashboard',
+      headerLeft: (
+        <View style={{paddingHorizontal: 20}}>
+          <Icon
+            name="bars"
+            size={18}
+            color={BLACK}
+            onPress={() => {
+              navigation.toggleDrawer && navigation.toggleDrawer();
+            }}
+          />
+        </View>
+      ),
+    };
+  };
+
   constructor() {
     super(...arguments);
     this.state = {
@@ -29,12 +54,8 @@ class Dashboard extends Component<Props, State> {
   }
   render() {
     return (
-      <View style={{padding: 10, flex: 1}}>
-        <View
-          style={{
-            flexDirection: 'row',
-          }}
-        >
+      <View style={{backgroundColor: WHITE, flex: 1, padding: 15}}>
+        <View style={{flexDirection: 'row'}}>
           <BalanceCard
             title="Income"
             color={BLUE_SEA}
@@ -76,19 +97,15 @@ class Dashboard extends Component<Props, State> {
 
   _handleSelectCard(type: 'INCOME' | 'EXPENSE') {
     let {activeCard} = this.state;
-    let selectedTransactionList =
-      activeCard !== null
-        ? this.props.transactionList.filter(
-          (transaction) => transaction.type === type
-        )
-        : this.props.transactionList;
-    let tempTransactionList =
-      activeCard === null
-        ? this.props.transactionList
-        : selectedTransactionList;
+    let {transactionList} = this.props;
+    let selectedCard = activeCard === null || activeCard !== type ? type : null;
+    let selectedHistories = transactionList.filter(
+      (transaction) =>
+        transaction.type === selectedCard || selectedCard === null
+    );
     this.setState({
-      activeCard: this.state.activeCard === type ? null : type,
-      tempTransactionList,
+      activeCard: selectedCard,
+      tempTransactionList: selectedHistories,
     });
   }
 }

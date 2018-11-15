@@ -9,7 +9,7 @@ type BalanceCardProps = {
   title: string;
   amount: string;
   color: string;
-  onCardPressed: () => void;
+  onCardPressed?: () => void;
 };
 
 export default function BalanceCard(props: BalanceCardProps) {

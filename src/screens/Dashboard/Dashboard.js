@@ -17,12 +17,14 @@ type Props = {
 
 type State = {
   activeCard: 'INCOME' | 'EXPENSE' | null;
+  tempTransactionList: Array<Transaction>;
 };
 class Dashboard extends Component<Props, State> {
   constructor() {
     super(...arguments);
     this.state = {
       activeCard: null,
+      tempTransactionList: this.props.transactionList,
     };
   }
   render() {
@@ -37,19 +39,19 @@ class Dashboard extends Component<Props, State> {
             title="Income"
             color={BLUE_SEA}
             amount={this._handleAmount('INCOME')}
-            // onCardPressed={() => this._handleSelectCard('INCOME')}
+            onCardPressed={() => this._handleSelectCard('INCOME')}
           />
           <BalanceCard
             color={RED}
             title="Expense"
             amount={this._handleAmount('EXPENSE')}
-            // onCardPressed={() => this._handleSelectCard('INCOME')}
+            onCardPressed={() => this._handleSelectCard('EXPENSE')}
           />
         </View>
         <View style={{marginTop: 15, flex: 1}}>
           <Text style={{marginBottom: 5, fontSize: 16}}>History</Text>
           <FlatList
-            data={this.props.transactionList}
+            data={this.state.tempTransactionList}
             renderItem={({item}) => <TransactionCard {...item} />}
             keyExtractor={({id}) => id}
             style={{flex: 1}}
@@ -73,7 +75,21 @@ class Dashboard extends Component<Props, State> {
   };
 
   _handleSelectCard(type: 'INCOME' | 'EXPENSE') {
-    this.setState({activeCard: this.state.activeCard === type ? null : type});
+    let {activeCard} = this.state;
+    let selectedTransactionList =
+      activeCard !== null
+        ? this.props.transactionList.filter(
+          (transaction) => transaction.type === type
+        )
+        : this.props.transactionList;
+    let tempTransactionList =
+      activeCard === null
+        ? this.props.transactionList
+        : selectedTransactionList;
+    this.setState({
+      activeCard: this.state.activeCard === type ? null : type,
+      tempTransactionList,
+    });
   }
 }
 

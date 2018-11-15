@@ -15,11 +15,11 @@ import Dashboard from '../screens/Dashboard/Dashboard';
 import TabBar from '../components/TabBar';
 import BlankPage from '../screens/BlankPage';
 
-// $FlowFixMe: Weird Flow Issue right here
 let DashboardStack = createStackNavigator({
   dashboard: Dashboard,
 });
 
+// $FlowFixMe: Weird Flow Issue right here
 let TransactionStack = createStackNavigator({
   addTransaction: AddTransaction,
 });

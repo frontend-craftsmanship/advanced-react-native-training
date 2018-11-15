@@ -2,13 +2,13 @@
 
 import React, {Component} from 'react';
 import {View, FlatList} from 'react-native';
-import {connect} from 'react-redux';
 
 import {Text, Icon} from '../../core-ui';
 import TransactionCard from './components/TransactionCard';
 import BalanceCard from './components/BalanceCard';
 import {BLUE_SEA, RED, WHITE, BLACK} from '../../constants/colors';
 import {formatNumberComma} from '../../helpers/formatNumberToCurrency';
+import {TRANSACTIONS_DATA} from '../../constants/fixture';
 import type {Transaction} from '../../types/index';
 import type {NavigationScreenProp, NavigationRoute} from 'react-navigation';
 
@@ -22,6 +22,7 @@ type State = {
   activeCard: 'INCOME' | 'EXPENSE' | null;
   tempTransactionList: Array<Transaction>;
 };
+
 class Dashboard extends Component<Props, State> {
   static navigationOptions = ({
     navigation,
@@ -49,7 +50,7 @@ class Dashboard extends Component<Props, State> {
     super(...arguments);
     this.state = {
       activeCard: null,
-      tempTransactionList: this.props.transactionList,
+      tempTransactionList: TRANSACTIONS_DATA,
     };
   }
   render() {
@@ -84,8 +85,7 @@ class Dashboard extends Component<Props, State> {
   }
 
   _handleAmount = (type: 'INCOME' | 'EXPENSE') => {
-    let {transactionList} = this.props;
-    let getTransactionType = transactionList.filter(
+    let getTransactionType = TRANSACTIONS_DATA.filter(
       (transaction) => transaction.type === type
     );
     let amount = 0;
@@ -97,9 +97,8 @@ class Dashboard extends Component<Props, State> {
 
   _handleSelectCard(type: 'INCOME' | 'EXPENSE') {
     let {activeCard} = this.state;
-    let {transactionList} = this.props;
     let selectedCard = activeCard === null || activeCard !== type ? type : null;
-    let selectedHistories = transactionList.filter(
+    let selectedHistories = TRANSACTIONS_DATA.filter(
       (transaction) =>
         transaction.type === selectedCard || selectedCard === null
     );
@@ -110,12 +109,4 @@ class Dashboard extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: *) => {
-  return {
-    transactionList: state.transaction,
-  };
-};
-
-const DashboardContainer = connect(mapStateToProps)(Dashboard);
-DashboardContainer.displayName = 'Dashboard';
-export default DashboardContainer;
+export default Dashboard;

@@ -2,7 +2,6 @@
 
 import React, {Component} from 'react';
 import {View, Image, ActivityIndicator} from 'react-native';
-import {connect} from 'react-redux';
 
 import {WHITE, BLUE_SEA} from '../../constants/colors';
 import Logo from '../../images/logo.png';
@@ -37,11 +36,4 @@ class Authentication extends Component<Props, *> {
   }
 }
 
-const mapStateToProps = (state: *) => {
-  return {
-    token: state.login.token,
-  };
-};
-const AuthContainer = connect(mapStateToProps)(Authentication);
-AuthContainer.displayName = 'Authentication';
-export default AuthContainer;
+export default Authentication;

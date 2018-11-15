@@ -9,7 +9,6 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
-import {connect} from 'react-redux';
 
 import {Button} from '../../core-ui';
 import {WHITE, BLUE_SEA, LIGHT_GREY} from '../../constants/colors';
@@ -29,7 +28,6 @@ class Login extends Component<*, State> {
   };
   render() {
     let {email, password, activeTextInput} = this.state;
-    let {data} = this.props;
     return (
       <View style={styles.root}>
         <KeyboardAvoidingView behavior="padding">
@@ -40,7 +38,7 @@ class Login extends Component<*, State> {
             <Text>Username or Email</Text>
             <TextInput
               value={email}
-              placeholder={this.props.data.email}
+              placeholder={'user@email.com'}
               onChangeText={(email) => this.setState({email})}
               onFocus={() => this._setActiveTextInput('EMAIL')}
               style={[
@@ -52,7 +50,7 @@ class Login extends Component<*, State> {
             <TextInput
               secureTextEntry
               value={password}
-              placeholder={this.props.data.password}
+              placeholder={'password'}
               onChangeText={(password) => this.setState({password})}
               onFocus={() => this._setActiveTextInput('PASSWORD')}
               style={[
@@ -61,25 +59,16 @@ class Login extends Component<*, State> {
               ]}
             />
           </View>
-          <Button
-            text={data && data.token ? 'SIGN OUT' : 'SIGN IN'}
-            onPress={this._handleSubmit}
-            buttonStyle={{
-              backgroundColor: data.token ? 'red' : 'blue',
-            }}
-          />
+          <Button text={'SIGN IN'} onPress={this._handleSubmit} />
         </KeyboardAvoidingView>
       </View>
     );
   }
 
   _handleSubmit = () => {
-    let {email, password} = this.state;
-    let {submit} = this.props;
-    if (submit) {
-      submit({email, password});
-      this.props.navigation.navigate('dashboard');
-    }
+    //let {email, password} = this.state;
+    this.props.navigation.navigate('dashboard');
+    //TODO: Handle Submit Login
   };
   _setActiveTextInput(activeTextInput: 'EMAIL' | 'PASSWORD' | null) {
     this.setState({
@@ -110,20 +99,4 @@ let styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state: *) => {
-  return {
-    data: state.login,
-  };
-};
-
-const mapDispatchToProps = (dispatch: (action: *) => void) => {
-  return {
-    submit: (data) => dispatch({type: 'LOGIN_USER', payload: {...data}}),
-  };
-};
-const LoginContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
-LoginContainer.displayName = 'Login';
-export default LoginContainer;
+export default Login;

@@ -14,7 +14,7 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       <Provider store={store}>
-        <Chart />
+        <Login />
       </Provider>
     );
   }

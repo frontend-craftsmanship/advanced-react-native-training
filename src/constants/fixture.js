@@ -1,6 +1,6 @@
-//@flow
+// @flow
 
-const TRANSACTION_LIST = [
+const TRANSACTIONS_DATA = [
   {
     id: 'isuyfsd876',
     type: 'EXPENSE',
@@ -35,7 +35,7 @@ const TRANSACTION_LIST = [
   },
 ];
 
-const ANUAL_FINANCE_STATEMENTS: {[key: string | number]: Object} = {
+const ANUAL_FINANCE_STATEMENTS: {[string | number]: Object} = {
   [2016]: {
     income: [
       {x: 'Jul', y: 250},
@@ -128,4 +128,4 @@ const ANUAL_FINANCE_STATEMENTS: {[key: string | number]: Object} = {
   },
 };
 
-export {ANUAL_FINANCE_STATEMENTS, TRANSACTION_LIST};
+export {ANUAL_FINANCE_STATEMENTS, TRANSACTIONS_DATA};

@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Fragment, Component} from 'react';
-import {View} from 'react-native';
+import {View, Button} from 'react-native';
 
 import {Card} from '../../core-ui';
 import {ItemList} from '../../components';
@@ -13,7 +13,9 @@ import CashflowStat from './components/CashflowStat';
 import AddTransactionDetail from './components/AddTransactionDetail';
 
 import type {Category} from '../../types';
-
+type Props = {
+  goBack?: () => void;
+};
 type State = {
   transactionAmount: number;
   selectedCategory: ?Category;
@@ -26,7 +28,7 @@ type State = {
   selectedTransactionType: 'INCOME' | 'EXPENSE';
 };
 
-export default class AddTransaction extends Component<{}, State> {
+export default class AddTransaction extends Component<Props, State> {
   state = {
     transactionAmount: 0,
     selectedCategory: null,
@@ -45,8 +47,14 @@ export default class AddTransaction extends Component<{}, State> {
         {this._renderCashflowStat()}
         {this._renderItemList()}
         {this._renderModals()}
+        {this._renderGoBackButton()}
       </View>
     );
+  }
+
+  _renderGoBackButton() {
+    let {goBack} = this.props;
+    return <Button onPress={() => goBack && goBack()} title="Go Back" />;
   }
 
   _renderCashflowStat() {

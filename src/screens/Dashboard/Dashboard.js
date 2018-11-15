@@ -99,4 +99,6 @@ const mapStateToProps = (state: *) => {
   };
 };
 
-export default connect(mapStateToProps)(Dashboard);
+const DashboardContainer = connect(mapStateToProps)(Dashboard);
+DashboardContainer.displayName = 'Dashboard';
+export default DashboardContainer;

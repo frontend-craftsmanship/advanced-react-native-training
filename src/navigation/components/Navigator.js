@@ -17,7 +17,8 @@ class Navigator extends React.Component<Props, State> {
     currentRoute: 'Dashboard',
   };
 
-  _history = ['Chart'];
+  //TODO: Should use a better approch to update this _history
+  _history = [];
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this._goBack);

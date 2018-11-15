@@ -28,7 +28,6 @@ class Login extends Component<*, State> {
     activeTextInput: null,
   };
   render() {
-    console.log('this.props : ', this.props);
     let {email, password, activeTextInput} = this.state;
     let {data} = this.props;
     return (
@@ -121,7 +120,9 @@ const mapDispatchToProps = (dispatch: (action: *) => void) => {
     submit: (data) => dispatch({type: 'LOGIN_USER', payload: {...data}}),
   };
 };
-export default connect(
+const LoginContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Login);
+LoginContainer.displayName = 'Login';
+export default LoginContainer;

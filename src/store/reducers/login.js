@@ -34,7 +34,9 @@ export default function loginReducer(
     case 'LOGIN_USER':
       return {
         ...state,
+        //$FlowFixMe
         email: payload && payload.email,
+        //$FlowFixMe
         password: payload && payload.password,
         token:
           payload &&

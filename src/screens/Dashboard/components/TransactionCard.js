@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, Button, StyleSheet} from 'react-native';
 
 import {Card, Icon} from '../../../core-ui';
 import {categoryToIconName} from '../../../generals/utils';

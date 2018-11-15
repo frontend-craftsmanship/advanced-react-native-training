@@ -3,7 +3,7 @@
 type LoginState = {
   email: string;
   password: string;
-  token: string;
+  token: string | boolean;
 };
 
 type LoginAction =
@@ -15,7 +15,7 @@ type LoginAction =
       };
     }
   | {
-      type: ':LOGOUT_USER';
+      type: 'LOGOUT_USER';
     };
 
 const INITIAL_STATE: LoginState = {
@@ -28,12 +28,23 @@ export default function loginReducer(
   state: LoginState = INITIAL_STATE,
   action: LoginAction
 ) {
-  switch (action.type) {
+  let {type} = action;
+  let payload = action.payload && action.payload;
+  switch (type) {
     case 'LOGIN_USER':
       return {
         ...state,
-        email: action.payload.email,
-        password: action.payload.password,
+        email: payload.email,
+        password: payload.password,
+        token:
+          payload.email === 'admin@admin.com' && payload.password === '1234'
+            ? true
+            : false,
+      };
+    case 'LOGOUT_USER':
+      return {
+        ...state,
+        ...INITIAL_STATE,
       };
     default:
       return state;

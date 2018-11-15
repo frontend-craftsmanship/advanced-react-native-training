@@ -10,16 +10,31 @@ import {BLUE_SEA, RED} from '../../constants/colors';
 import type {Transaction} from '../../types/index';
 
 type Props = {
+  addTransaction: () => void;
   transactionList: Array<Transaction>;
 };
 
 class Dashboard extends Component<Props, *> {
+  constructor() {
+    super(...arguments);
+    this.state = {
+      activeCard: null,
+    };
+  }
   render() {
     return (
       <View style={{padding: 10, flex: 1}}>
         <View style={{flexDirection: 'row'}}>
-          <BalanceCard title="Income" amount="$13,500.00" color={BLUE_SEA} />
-          <BalanceCard title="Expense" amount="$49,000.00" color={RED} />
+          <BalanceCard
+            title="Income"
+            amount={this._handleAmount('INCOME')}
+            color={BLUE_SEA}
+          />
+          <BalanceCard
+            title="Expense"
+            amount={this._handleAmount('EXPENSE')}
+            color={RED}
+          />
         </View>
         <View style={{marginTop: 15, flex: 1}}>
           <Text style={{marginBottom: 5, fontSize: 16}}>History</Text>
@@ -34,6 +49,18 @@ class Dashboard extends Component<Props, *> {
       </View>
     );
   }
+
+  _handleAmount = (type: 'INCOME' | 'EXPENSE') => {
+    let {transactionList} = this.props;
+    let getTransactionType = transactionList.filter(
+      (transaction) => transaction.type === type
+    );
+    let amount = 0;
+    getTransactionType.map((transaction) => {
+      amount = amount + transaction.amount;
+    });
+    return '$'.concat(`${amount},00`);
+  };
 }
 
 const mapStateToProps = (state: *) => {

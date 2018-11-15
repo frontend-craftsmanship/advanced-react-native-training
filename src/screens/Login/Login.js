@@ -131,7 +131,9 @@ const mapDispatchToProps = (dispatch: (action: RootAction) => void) => {
   };
 };
 
-export default connect(
+const LoginContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Login);
+LoginContainer.displayName = 'Login';
+export default LoginContainer;

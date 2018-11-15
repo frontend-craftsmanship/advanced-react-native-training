@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import TransactionCard from './components/TransactionCard';
 import BalanceCard from './components/BalanceCard';
 import {BLUE_SEA, RED} from '../../constants/colors';
+import {formatNumberComma} from '../../helpers/formatNumberToCurrency';
 import type {Transaction} from '../../types/index';
 
 type Props = {
@@ -59,7 +60,7 @@ class Dashboard extends Component<Props, *> {
     getTransactionType.map((transaction) => {
       amount = amount + transaction.amount;
     });
-    return '$'.concat(`${amount},00`);
+    return '$'.concat(`${formatNumberComma(amount)},00`);
   };
 }
 

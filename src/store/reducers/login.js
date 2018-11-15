@@ -34,10 +34,12 @@ export default function loginReducer(
     case 'LOGIN_USER':
       return {
         ...state,
-        email: payload.email,
-        password: payload.password,
+        email: payload && payload.email,
+        password: payload && payload.password,
         token:
-          payload.email === 'admin@admin.com' && payload.password === '1234'
+          payload &&
+          payload.email === 'admin@admin.com' &&
+          (payload && payload.password === '1234')
             ? true
             : false,
       };

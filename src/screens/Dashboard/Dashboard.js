@@ -15,7 +15,10 @@ type Props = {
   transactionList: Array<Transaction>;
 };
 
-class Dashboard extends Component<Props, *> {
+type State = {
+  activeCard: 'INCOME' | 'EXPENSE' | null;
+};
+class Dashboard extends Component<Props, State> {
   constructor() {
     super(...arguments);
     this.state = {
@@ -25,16 +28,22 @@ class Dashboard extends Component<Props, *> {
   render() {
     return (
       <View style={{padding: 10, flex: 1}}>
-        <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+          }}
+        >
           <BalanceCard
             title="Income"
-            amount={this._handleAmount('INCOME')}
             color={BLUE_SEA}
+            amount={this._handleAmount('INCOME')}
+            // onCardPressed={() => this._handleSelectCard('INCOME')}
           />
           <BalanceCard
+            color={RED}
             title="Expense"
             amount={this._handleAmount('EXPENSE')}
-            color={RED}
+            // onCardPressed={() => this._handleSelectCard('INCOME')}
           />
         </View>
         <View style={{marginTop: 15, flex: 1}}>
@@ -62,6 +71,10 @@ class Dashboard extends Component<Props, *> {
     });
     return '$'.concat(`${formatNumberComma(amount)},00`);
   };
+
+  _handleSelectCard(type: 'INCOME' | 'EXPENSE') {
+    this.setState({activeCard: this.state.activeCard === type ? null : type});
+  }
 }
 
 const mapStateToProps = (state: *) => {

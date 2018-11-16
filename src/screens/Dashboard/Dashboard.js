@@ -9,12 +9,12 @@ import TransactionCard from './components/TransactionCard';
 import BalanceCard from './components/BalanceCard';
 import {BLUE_SEA, RED, WHITE, BLACK} from '../../constants/colors';
 import {formatNumberComma} from '../../helpers/formatNumberToCurrency';
-import type {Transaction} from '../../types/index';
+import type {Transaction, TransactionState} from '../../types/index';
 import type {NavigationScreenProp, NavigationRoute} from 'react-navigation';
 
 type Props = {
   addTransaction: () => void;
-  transactionList: Array<Transaction>;
+  data: TransactionState;
   navigation: Object;
 };
 
@@ -49,7 +49,7 @@ class Dashboard extends Component<Props, State> {
     super(...arguments);
     this.state = {
       activeCard: null,
-      tempTransactionList: this.props.transactionList,
+      tempTransactionList: this.props.data.transactionList,
     };
   }
   render() {
@@ -84,8 +84,8 @@ class Dashboard extends Component<Props, State> {
   }
 
   _handleAmount = (type: 'INCOME' | 'EXPENSE') => {
-    let {transactionList} = this.props;
-    let getTransactionType = transactionList.filter(
+    let {data} = this.props;
+    let getTransactionType = data.transactionList.filter(
       (transaction) => transaction.type === type
     );
     let amount = 0;
@@ -97,9 +97,9 @@ class Dashboard extends Component<Props, State> {
 
   _handleSelectCard(type: 'INCOME' | 'EXPENSE') {
     let {activeCard} = this.state;
-    let {transactionList} = this.props;
+    let {data} = this.props;
     let selectedCard = activeCard === null || activeCard !== type ? type : null;
-    let selectedHistories = transactionList.filter(
+    let selectedHistories = data.transactionList.filter(
       (transaction) =>
         transaction.type === selectedCard || selectedCard === null
     );
@@ -112,7 +112,7 @@ class Dashboard extends Component<Props, State> {
 
 const mapStateToProps = (state: *) => {
   return {
-    transactionList: state.transaction,
+    data: state.transaction,
   };
 };
 

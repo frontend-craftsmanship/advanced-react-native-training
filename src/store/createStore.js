@@ -1,6 +1,15 @@
 // @flow
 
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
+import createSagaMiddleware from 'redux-saga';
+
+import rootSaga from './saga';
 import rootReducer from './reducers';
 
-export default createStore(rootReducer);
+const sagaMiddleware = createSagaMiddleware();
+
+export default function() {
+  const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+  sagaMiddleware.run(rootSaga);
+  return store;
+}
